@@ -7,6 +7,10 @@ https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/
 
 # Roles
 Patricia Tanzer: Jelly Bean Collector
+
 Josh Moore: Meme Finder
+
 Logan Hornbuckle: Expert in Fingerpainting
+
 Morgan McIntyre: Professional Googler
+
