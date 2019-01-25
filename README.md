@@ -5,3 +5,8 @@ A web application that allows a user to create queries for Twitter data in a sim
 # Documentation Report (Last updated Jan. 24, 2019)
 https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
 
+# Roles
+Patricia Tanzer: Jelly Bean Collector
+Josh Moore: Meme Finder
+Logan Hornbuckle: Expert in Fingerpainting
+Morgan McIntyre: Professional Googler
