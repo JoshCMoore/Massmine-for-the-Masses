@@ -1,0 +1,1 @@
+# Must have MongoDB service installed and running. Instructions located here: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/#install-community-ubuntu-pkg

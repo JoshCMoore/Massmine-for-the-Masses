@@ -6,11 +6,10 @@ A web application that allows a user to create queries for Twitter data in a sim
 https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
 
 # Roles
-Patricia Tanzer: Jelly Bean Collector
+Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at
 
-Josh Moore: Meme Finder
+Josh Moore: Meme Finder - Looking for problems in what we've written 
 
-Logan Hornbuckle: Expert in Fingerpainting
+Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice
 
-Morgan McIntyre: Professional Googler
-
+Morgan McIntyre: Professional Googler - Research and communication
