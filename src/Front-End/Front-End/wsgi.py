@@ -1,5 +1,5 @@
 """
-WSGI config for mftm project.
+WSGI config for Front-End project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mftm.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Front-End.settings")
 
 application = get_wsgi_application()
