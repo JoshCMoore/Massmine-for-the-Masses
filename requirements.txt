@@ -5,6 +5,7 @@ Linux (Ubuntu tested) host with the following installed:
 mongodb - runs the database
 pymongo - necessary for database scripts
 python3 - necessary for python scripting (pymongo)
+django - web application framework
 django-nonrel - fork of django supporting non-relational databases
 djangotollbox - utilties for non-relational django applications
 mongodb-engine - django mongodb engine. 
