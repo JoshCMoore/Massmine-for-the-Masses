@@ -16,18 +16,24 @@ import pymongo
 from pymongo import MongoClient
 
 client = MongoClient(mongo_db_ip)
-userdatabase = client["userdatabase"]
+user_database = client["user_database"]
 
 #initialize user collection and delete temp user used for creation
-usercollection = userdatabase["usercollection"]
-user_test_data = {'username':'Luke Skywalker', 'encryptedPassword':'thisisabadpassword'}
-usercollection.insert_one(user_test_data)
-userdatabase.usercollection.remove({'username':'Luke Skywalker'})
+user_collection = user_database["user_collection"]
+user_test_data = {'username':'Luke Skywalker', 'encrypted_password':'thisisabadpassword'}
+user_collection.insert_one(user_test_data)
+user_database.user_collection.remove({'username':'Luke Skywalker'})
 
 #initialize oauth collection and delete temp data used for creation
-oauthcollection = userdatabase["oauthcollection"]
-oauth_test_data = {'username':'Leia Organa', 'oauthkey':'00000000000000'}
-oauthcollection.insert_one(oauth_test_data)
-userdatabase.oauthcollection.remove({'username':'Leia Organa'})
+oauth_collection = user_database["oauth_collection"]
+oauth_test_data = {'username':'Leia Organa', 'oauth_key':'00000000000000'}
+oauth_collection.insert_one(oauth_test_data)
+user_database.oauth_collection.remove({'username':'Leia Organa'})
+
+#initialize study collection and delete temp data used for creation
+study_collection = user_database["study_collection"]
+study_test_data = {'username': 'Luke Skywalker', 'study_id': '3263827'}
+study_collection.insert_one(study_test_data)
+user_database.study_collection.remove({'username': 'Luke Skywalker'})
 
 #All done! Go have fun:)

@@ -1,11 +1,18 @@
-# Setup for server side:
+##### Setup for server side #####
 
 Linux (Ubuntu tested) host with the following installed:
 
-mongodb
-pymongo
-python3
+mongodb - runs the database
+pymongo - necessary for database scripts
+python3 - necessary for python scripting (pymongo)
+django - web application framework
+django-nonrel - fork of django supporting non-relational databases
+djangotollbox - utilties for non-relational django applications
+mongodb-engine - django mongodb engine. Setup instructions at: https://django-mongodb-engine.readthedocs.io/en/latest/topics/setup.html
 
-# Running the application:
+
+##### Running the application: #####
 
 Server must have the mongod service running on port 27017. 
+Start web page with the following in the command line: python manage.py runserver
+
