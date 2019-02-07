@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'Front-End.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_mongodb_engine',
-        'NAME':'userdatabase'
+        'NAME':'user_database'
     }
 }
 
