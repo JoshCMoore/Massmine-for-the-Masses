@@ -1,6 +1,10 @@
-<h2>Login</h2>
-<form method="post">
+{% load static %}
+<!DOCTYPE html>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<div css="text-allign:center">
+<form method="post" id="form_login" align="center">
 	{% csrf_token %}
 	{{ form.as_p }}
 	<button type="submit">Login</button>
 </form>
+</div>

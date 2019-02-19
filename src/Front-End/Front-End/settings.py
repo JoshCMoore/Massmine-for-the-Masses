@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
 ]
 
@@ -67,6 +67,9 @@ TEMPLATES = [
         },
     },
 ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WSGI_APPLICATION = 'Front-End.wsgi.application'
 
@@ -114,11 +117,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+# Can't use https until a production server is in use
+
+SESSION_COOKIE_SECURE = False 
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
