@@ -1,7 +1,13 @@
-# acccounts/urls.py
-from django.urls import path
-from . import views
+# accounts/urls.py
 
-urlpatterns = [
-        path('signup/', views.SignUp.as_view(), name='signup'),
-        ]
+from django.conf.urls import url
+from accounts import views
+
+# SET THE NAMESPACE!
+app_name = 'accounts'
+
+# Be careful setting the name to just /login use userlogin instead!
+urlpatterns=[
+    url(r'^register/$',views.register,name='register'),
+    url(r'^user_login/$',views.user_login,name='user_login'),
+]
