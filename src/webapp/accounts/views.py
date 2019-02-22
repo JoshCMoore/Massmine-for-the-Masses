@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-    return render(request,'accounts/index.html')
+    return render(request,'index.html')
 
 @login_required
 def special(request):
