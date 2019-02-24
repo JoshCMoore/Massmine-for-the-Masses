@@ -16,7 +16,8 @@
           <li><a class="navbar-brand" href="{% url 'index' %}">HOME</a></li>
           <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
           <li><a class="navbar-link" href="{% url 'accounts:register' %}">Register</a></li>     
-          {# Logic for login/logout #}
+          <li><a class="navbar-link" href="{% url 'analysis:analysis'%}">Analysis</a></li>
+	  {# Logic for login/logout #}
           {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}
