@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class UserProfileInfo(models.Model):
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
 
     oauth = models.CharField(max_length=50, blank=True)
 
