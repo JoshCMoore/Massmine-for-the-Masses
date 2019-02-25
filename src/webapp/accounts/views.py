@@ -1,13 +1,13 @@
 # accounts/views.py
 
-from django.shortcuts import render
-from accounts.forms import UserForm,UserProfileInfoForm
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from accounts.forms import RegistrationForm, EditProfileForm
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
-
+from django.http import HttpResponseRedirect, HttpResponse
 
 def index(request):
     return render(request,'index.html')
@@ -21,28 +21,46 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
+
 def register(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileInfoForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
-            registered = True
-        #else:
-            #Do nothing, user form was not valid
+    if request.method =='POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('index'))
+       # else:
+            #do nothing, form not valid
     else:
-        user_form = UserForm()
-        profile_form = UserProfileInfoForm()
-    return render(request,'accounts/registration.html',
-                          {'user_form':user_form,
-                           'profile_form':profile_form,
-                           'registered':registered})
+        form = RegistrationForm()
+    return render(request, 'accounts/registration.html', {'form':form})
+
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('index'))
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form}
+        return render(request, 'accounts/edit_profile.html', args)
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('index'))
+        else:
+            return redirect(reverse('accounts:change_password'))
+    else:
+        form = PasswordChangeForm(user=request.user)
+        args = {'form': form}
+        return render(request,'accounts/change_password.html', args)
 
 def user_login(request):
     if request.method == 'POST':
