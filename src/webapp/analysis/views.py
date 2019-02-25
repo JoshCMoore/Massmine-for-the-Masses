@@ -2,6 +2,10 @@
 # analysis/views.py
 
 from django.shortcuts import render
+<<<<<<< HEAD
+=======
+from accounts.forms import UserForm,UserProfileInfoForm
+>>>>>>> origin/development
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse

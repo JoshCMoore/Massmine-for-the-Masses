@@ -19,6 +19,13 @@ from accounts import views
 
 urlpatterns = [
     url(r'^$',views.index,name='index'),
+<<<<<<< HEAD
     url(r'^accounts/',include('accounts.urls', namespace='accounts')),
     url(r'^analysis/',include('analysis.urls')),
+=======
+    url(r'^special/',views.special,name='special'),
+    url(r'^accounts/',include('accounts.urls')),
+    url(r'^analysis/',include('analysis.urls')),
+    url(r'^logout/$', views.user_logout, name='logout'),
+>>>>>>> origin/development
 ]

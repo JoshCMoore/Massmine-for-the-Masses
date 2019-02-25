@@ -122,7 +122,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/user_login/'
+<<<<<<< HEAD
 LOGIN_EXEMPT_URLS = (
 	r'^account/logout/$',
 	r'^account/register/$',)
+=======
+>>>>>>> origin/development
 

@@ -15,7 +15,12 @@
 {# Home/Register #}
           <li><a class="navbar-brand" href="{% url 'index' %}">HOME</a></li>
           <li><a class="navbar-link" href="{% url 'accounts:register' %}">Register</a></li>     
+<<<<<<< HEAD
 	  {# Some stuff you only see when logged in #}
+=======
+          <li><a class="navbar-link" href="{% url 'analysis:analysis'%}">Analysis</a></li>
+	  {# Logic for login/logout #}
+>>>>>>> origin/development
           {% if user.is_authenticated %}
           <li><a class="navbar-link"href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
 	  <li><a class="navbar-link"href="{% url 'accounts:change_password' %}">Change Password</a></li>
