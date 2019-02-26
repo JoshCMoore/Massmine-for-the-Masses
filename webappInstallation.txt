@@ -1,0 +1,25 @@
+#patanzer
+#How to install Massmine-for-the-Masses
+
+1. Install an Ubuntu VM - 18.04 tested
+2. Install git: sudo apt-get install git
+3. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	 - This will ask for your github credentials
+4. Get into cloned directory: cd Massmine-for-the-Masses
+5. Checkout the right branch (for example, I do: git checkout patanzer)
+6. Get back out to your home directory: cd  
+7. Install pip: sudo apt install python3-pip
+8. Install virtualenv: python3 -m pip install virtualenv
+9. Make a working directory: mkdir django
+10. Go into working directoy: cd django
+11. Create virtual enviornment: python3 -m virtualenv environ -p python3
+12. Activate environment: source environ/bin/activate
+13. Install django: pip install django
+14. Copy webappproject folder into your virtual environment:
+	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
+15. Get into working directory: cd webapp
+16. Run your server!: python manage.py runserver
+
+
+You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
+   
