@@ -1,13 +1,11 @@
-# accounts/urls.py
-
 from django.conf.urls import url
 from accounts import views
-
-# SET THE NAMESPACE!
 app_name = 'accounts'
 
-# Be careful setting the name to just /login use userlogin instead!
-urlpatterns=[
-    url(r'^register/$',views.register,name='register'),
+urlpatterns = [
     url(r'^user_login/$',views.user_login,name='user_login'),
+    url(r'^user_logout/$', views.user_logout,name='user_logout'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^profile/edit/$', views.edit_profile, name='edit_profile'),
+    url(r'^change-password/$', views.change_password, name='change_password'),
 ]
