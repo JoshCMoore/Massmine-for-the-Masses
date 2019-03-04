@@ -37,50 +37,12 @@ class UserProfileForm(forms.ModelForm):
         fields = ('oauth', 'bio')
 
     def save(self, user=None):
-        user_profile = super(EditProfileForm, self).save(commit=False)
+        user_profile = super(UserProfileForm, self).save(commit=False)
         if user:
             user_profile.user = user
         user_profile.save()
         return user_profile
 
-class EditProfileForm(UserChangeForm):
-
-    class Meta:
-        model = Profile
-        fields = ('oauth', 'bio')
-
-    def save(self, user=None):
-        user_profile = super(EditProfileForm, self).save(commit=False)
-        if user:
-            user_profile.user = user
-        user_profile.save()
-        return user_profile
-
-class EditProfileForm(UserChangeForm):
-
-    class Meta:
-        model = Profile
-        fields = ('oauth', 'bio')
-
-    def save(self, user=None):
-        user_profile = super(EditProfileForm, self).save(commit=False)
-        if user:
-            user_profile.user = user
-        user_profile.save()
-        return user_profile
-
-class EditProfileForm(UserChangeForm):
-
-    class Meta:
-        model = Profile
-        fields = ('oauth', 'bio')
-
-    def save(self, user=None):
-        user_profile = super(EditProfileForm, self).save(commit=False)
-        if user:
-            user_profile.user = user
-        user_profile.save()
-        return user_profile
 
 class EditUserForm(UserChangeForm):
 

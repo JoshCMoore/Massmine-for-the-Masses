@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from accounts.forms import UserProfileForm, RegistrationForm, EditProfileForm, EditUserForm
+from accounts.forms import UserProfileForm, RegistrationForm, EditUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
@@ -39,7 +39,6 @@ def register(request):
             {'user_form':user_form,
                 'profile_form':profile_form})
 
-#This one edits email, first name, last name
 @login_required
 def edit_user_profile(request):
     if request.method == 'POST':
@@ -55,20 +54,6 @@ def edit_user_profile(request):
         profile_form = UserProfileForm(instance=request.user.profile)
         args = {'user_form':user_form, 'profile_form':profile_form}
         return render(request, 'accounts/edit_user_profile.html', args)
-
-#This one edits bio, oauth
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
-
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('index'))
-    else:
-        form = EditProfileForm(instance=request.user)
-        args = {'form': form}
-        return render(request, 'accounts/edit_profile.html', args)
 
 @login_required
 def change_password(request):

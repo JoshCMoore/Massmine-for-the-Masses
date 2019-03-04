@@ -16,8 +16,7 @@
           <li><a class="navbar-brand" href="{% url 'index' %}">HOME</a></li>
         {# Some stuff you only see when logged in #}
           {% if user.is_authenticated %}
-	  <li><a class="navbar-link"href="{% url 'accounts:edit_user_profile' %}">Edit User</a></li>
-          <li><a class="navbar-link"href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
+	  <li><a class="navbar-link"href="{% url 'accounts:edit_user_profile' %}">Edit Profile</a></li>
 	  <li><a class="navbar-link"href="{% url 'accounts:change_password' %}">Change Password</a></li>
           <li><a class="navbar-link" href="{% url 'analysis:analysis'%}">Analysis</a></li>
           <li><a class="navbar-link" href="{% url 'accounts:user_logout' %}">Logout</a></li>
