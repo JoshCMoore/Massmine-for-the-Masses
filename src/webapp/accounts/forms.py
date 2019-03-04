@@ -3,7 +3,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from accounts.models import UserProfile
+from accounts.models import Profile
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -29,14 +30,53 @@ class RegistrationForm(UserCreationForm):
 
         return user
 
-class EditProfileForm(UserChangeForm):
+class UserProfileForm(forms.ModelForm):
 
     class Meta:
-        model = UserProfile
+        model = Profile
         fields = ('oauth', 'bio')
 
     def save(self, user=None):
-        user_profile = super(UserProfileForm, self).save(commit=False)
+        user_profile = super(EditProfileForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile
+
+class EditProfileForm(UserChangeForm):
+
+    class Meta:
+        model = Profile
+        fields = ('oauth', 'bio')
+
+    def save(self, user=None):
+        user_profile = super(EditProfileForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile
+
+class EditProfileForm(UserChangeForm):
+
+    class Meta:
+        model = Profile
+        fields = ('oauth', 'bio')
+
+    def save(self, user=None):
+        user_profile = super(EditProfileForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile
+
+class EditProfileForm(UserChangeForm):
+
+    class Meta:
+        model = Profile
+        fields = ('oauth', 'bio')
+
+    def save(self, user=None):
+        user_profile = super(EditProfileForm, self).save(commit=False)
         if user:
             user_profile.user = user
         user_profile.save()
