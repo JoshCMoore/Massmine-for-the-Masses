@@ -1,8 +1,8 @@
 # accounts/admin.py
 
 from django.contrib import admin
-from accounts.models import UserProfile,User
+from accounts.models import Profile,User
 
 
 
-admin.site.register(UserProfile)
+admin.site.register(Profile)
