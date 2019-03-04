@@ -34,6 +34,7 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'accounts/registration.html', {'form':form})
 
+#This one edits email, first name, last name
 @login_required
 def edit_user_profile(request):
     if request.method == 'POST':
@@ -47,6 +48,7 @@ def edit_user_profile(request):
         args = {'form':form}
         return render(request, 'accounts/edit_user_profile.html', args)
 
+#This one edits bio, oauth
 @login_required
 def edit_profile(request):
     if request.method == 'POST':

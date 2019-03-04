@@ -35,6 +35,13 @@ class EditProfileForm(UserChangeForm):
         model = UserProfile
         fields = ('oauth', 'bio')
 
+    def save(self, user=None):
+        user_profile = super(UserProfileForm, self).save(commit=False)
+        if user:
+            user_profile.user = user
+        user_profile.save()
+        return user_profile
+
 class EditUserForm(UserChangeForm):
 
     class Meta:
