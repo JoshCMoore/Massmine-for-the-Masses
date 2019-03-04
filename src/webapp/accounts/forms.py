@@ -29,8 +29,13 @@ class RegistrationForm(UserCreationForm):
 
         return user
 
-
 class EditProfileForm(UserChangeForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('oauth', 'bio')
+
+class EditUserForm(UserChangeForm):
 
     class Meta:
         model = User

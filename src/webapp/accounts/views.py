@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from accounts.forms import RegistrationForm, EditProfileForm
+from accounts.forms import RegistrationForm, EditProfileForm, EditUserForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
@@ -34,7 +34,20 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'accounts/registration.html', {'form':form})
 
+@login_required
+def edit_user_profile(request):
+    if request.method == 'POST':
+        form = EditUserForm(request.POST, instance=request.user)
 
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('index'))
+    else:
+        form = EditUserForm(instance=request.user)
+        args = {'form':form}
+        return render(request, 'accounts/edit_user_profile.html', args)
+
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
@@ -47,6 +60,7 @@ def edit_profile(request):
         args = {'form': form}
         return render(request, 'accounts/edit_profile.html', args)
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
