@@ -12,9 +12,15 @@ from django.http import HttpResponseRedirect, HttpResponse
 def index(request):
     return render(request,'index.html')
 
+def login_error(request):
+    return render(request,'login_error.html')
+
+def account_inactive_error(request):
+    return render(request,'account_inactive_error.html')
+
 @login_required
-def special(request):
-    return HttpResponse("You are logged in !")
+def password_change_error(request):
+    return render(request,'password_change_error.html')
 
 @login_required
 def user_logout(request):
@@ -65,7 +71,8 @@ def change_password(request):
             update_session_auth_hash(request, form.user)
             return redirect(reverse('index'))
         else:
-            return redirect(reverse('accounts:change_password'))
+            return render(request,'accounts/password_change_error.html', {})
+	    #form not valid
     else:
         form = PasswordChangeForm(user=request.user)
         args = {'form': form}
@@ -81,8 +88,9 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Your account was inactive.")
+                return render(request,'accounts/account_inactive_error.html',{})
         else:
-            return HttpResponse("Invalid login details given")
+            return render(request,'accounts/login_error.html', {}) 
+	    #username or password incorrect
     else:
         return render(request, 'accounts/login.html', {})
