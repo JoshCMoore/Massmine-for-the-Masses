@@ -2,12 +2,13 @@
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from accounts.forms import UserProfileForm, RegistrationForm, EditUserForm
+from accounts.forms import UserRegistrationForm, ProfileForm, EditUserForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+from django.db import transaction
 
 def index(request):
     return render(request,'index.html')
@@ -27,29 +28,27 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
-
 def register(request):
     if request.method =='POST':
-        user_form = RegistrationForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.oauth = form.cleaned_data.get('oauth')
+            user.profile.bio = form.cleaned_data.get('bio')
             user.save()
-            profile = profile_form.save()
-            profile.user = user
-            profile.save()
+            return render(request, 'index.html')
     else:
-        user_form = RegistrationForm()
-        profile_form = UserProfileForm()
+        form = UserRegistrationForm()
     return render(request, 'accounts/registration.html', 
-            {'user_form':user_form,
-                'profile_form':profile_form})
+            {'form':form})
 
 @login_required
+@transaction.atomic
 def edit_user_profile(request):
     if request.method == 'POST':
         user_form = EditUserForm(request.POST, instance=request.user)
-        profile_form = UserProfileForm(request.POST, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -57,9 +56,9 @@ def edit_user_profile(request):
             return redirect(reverse('index'))
     else:
         user_form = EditUserForm(instance=request.user)
-        profile_form = UserProfileForm(instance=request.user.profile)
-        args = {'user_form':user_form, 'profile_form':profile_form}
-        return render(request, 'accounts/edit_user_profile.html', args)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'accounts/edit_user_profile.html', 
+            {'user_form':user_form, 'profile_form': profile_form})
 
 @login_required
 def change_password(request):
