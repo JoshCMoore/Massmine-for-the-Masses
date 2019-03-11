@@ -13,3 +13,12 @@ Josh Moore: Meme Finder - Looking for problems in what we've written
 Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice
 
 Morgan McIntyre: Professional Googler - Research and communication
+
+# Subsystems
+Patricia Tanzer: User Account Management
+
+Josh Moore: Massmine Integration
+
+Logan Hornbuckle: Study Creation
+
+Morgan McIntyre: Analysis Creation
