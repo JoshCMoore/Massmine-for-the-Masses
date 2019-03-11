@@ -13,7 +13,7 @@
 		
 	<h3>You may sort this study based on the following options.</h3>
 	<label for="analysis_type"> Pick an analysis:</label>
-	<select id="analysis_select">
+	<select name="analysis_select">
 		<option value="tweet_type">Sort by tweet type</option>
 		<option value="freq_words">Sort by the most frequently used words</option>
 		<option value="freq_hashtags">Sort by the most frequently used hashtags</option>
@@ -29,7 +29,7 @@
 
 	</select>	
 	
-	<input type="submit" name="" value="Create Analysis">
+	<input type="submit" value="Create Analysis">
 	</form>
     {% else %}
         <h2>Must be logged in to create an anlysis.</h2>
