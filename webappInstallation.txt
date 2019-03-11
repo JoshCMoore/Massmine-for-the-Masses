@@ -18,7 +18,16 @@
 14. Copy webappproject folder into your virtual environment:
 	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
 15. Get into working directory: cd webapp
-16. Run your server!: python manage.py runserver
+
+
+If your database does not exist or needs to be remade, run the following commands from in the django/webapp folder:
+
+16. python manage.py makemigrations
+17. python manage.py migrate --run-syncdb
+
+
+Finally -
+18. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
