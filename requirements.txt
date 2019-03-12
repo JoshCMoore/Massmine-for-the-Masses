@@ -1,18 +1,8 @@
-##### Setup for server side #####
+Linux (Ubuntu 18.04 tested) host with the following installed:
 
-Linux (Ubuntu tested) host with the following installed:
-
-mongodb - runs the database
-pymongo - necessary for database scripts
-python3 - necessary for python scripting (pymongo)
+python3 - necessary for python scripting and commands
 django - web application framework
-django-nonrel - fork of django supporting non-relational databases
-djangotollbox - utilties for non-relational django applications
-mongodb-engine - django mongodb engine. Setup instructions at: https://django-mongodb-engine.readthedocs.io/en/latest/topics/setup.html
-Chicken 4.13.0 - Chicken Scheme is needed to build MassMine http://code.call-cc.org/releases/4.13.0/
-
-##### Running the application: #####
-
-Server must have the mongod service running on port 27017. 
-Start web page with the following in the command line: python manage.py runserver
+pip  - used to install additional tools
+numpy  - used for analysis
+matplotlib - used for analysis
 
