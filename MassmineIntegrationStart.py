@@ -6,6 +6,7 @@ args = ["-t twitter-search","-c 1","-q \"bugcrowd\""]
 command = "massmine"
 for a in args:
 	command+=" "+a
+command+="|jsan --output=mydata.csv"
 process = subprocess.Popen(command.split(),stdout=subprocess.PIPE)
 output, error = process.communicate()
 

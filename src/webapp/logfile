@@ -1,0 +1,2 @@
+[13/Mar/2019 02:27:50] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 02:27:50] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2454

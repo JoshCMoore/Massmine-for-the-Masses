@@ -1,0 +1,14 @@
+# How to run the docker container
+
+1. Make sure that docker is installed on your computer and that the docker daemon is running
+2. From the src folder, run this command:
+	docker build -t project .
+	This will create the container named project from the Dockerfile
+3. To run this container run this command:
+	sudo docker run -p 8000:8000 project
+	Which will publish the docker port 8000 to your local host 8000
+4. At this point, you should be able to access the webpage at 127.0.0.1:8000
+If you want to kill the container, run: 
+	docker ps
+	Which will print the containers that are currently running with their Ids, to kill a container run:
+	docker kill CONTAINER_ID

@@ -68,14 +68,10 @@ TEMPLATES = [
     },
 ]
 
-<<<<<<< HEAD:src/Front-End/Front-End/settings.py
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-WSGI_APPLICATION = 'Front-End.wsgi.application'
-=======
 WSGI_APPLICATION = 'webappproject.wsgi.application'
->>>>>>> master:src/webapp/webappproject/settings.py
 
 
 # Database
@@ -124,14 +120,13 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = 'home'
 
-<<<<<<< HEAD:src/Front-End/Front-End/settings.py
 
 # Can't use https until a production server is in use
 
 SESSION_COOKIE_SECURE = False 
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
-=======
+
 # Logging information
 # To use this logger in any of the python files, add this to the top of the file: import logging
 # log = =logging.get(Logger(__name__)
@@ -154,7 +149,7 @@ LOGGING = {
         'logfile': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
-            'filename': "/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/Front-End/logfile",
+            'filename': "./logfile",
             'maxBytes': 50000,
             'backupCount': 2,
             'formatter': 'standard',
@@ -188,4 +183,3 @@ LOGGING = {
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/user_login/'
->>>>>>> master:src/webapp/webappproject/settings.py
