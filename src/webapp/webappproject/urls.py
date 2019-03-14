@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^special/',views.special,name='special'),
     url(r'^accounts/',include('accounts.urls')),
     url(r'^logout/$', views.user_logout, name='logout'),
+	url(r'^massmine/',include('massminetest.urls')),
 ]

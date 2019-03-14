@@ -1,2 +1,242 @@
 [13/Mar/2019 02:27:50] WARNING [django.request:228] Not Found: /favicon.ico
 [13/Mar/2019 02:27:50] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2454
+[14/Mar/2019 02:56:16] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 02:56:16] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2454
+[14/Mar/2019 02:56:23] WARNING [django.request:228] Not Found: /massminetest
+[14/Mar/2019 02:56:23] WARNING [django.server:154] "GET /massminetest HTTP/1.1" 404 2457
+[14/Mar/2019 02:56:56] WARNING [django.request:228] Not Found: /massminetesting
+[14/Mar/2019 02:56:56] WARNING [django.server:154] "GET /massminetesting HTTP/1.1" 404 2466
+[14/Mar/2019 02:56:56] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 02:56:56] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2454
+[14/Mar/2019 03:06:10] WARNING [django.request:228] Not Found: /massminetesting
+[14/Mar/2019 03:06:10] WARNING [django.server:154] "GET /massminetesting HTTP/1.1" 404 2576
+[14/Mar/2019 03:06:10] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:06:10] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:06:16] WARNING [django.request:228] Not Found: /massmine/massminetesting
+[14/Mar/2019 03:06:16] WARNING [django.server:154] "GET /massmine/massminetesting HTTP/1.1" 404 2686
+[14/Mar/2019 03:06:17] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:06:17] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:06:19] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:06:19] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:07:19] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:07:19] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:07:25] WARNING [django.request:228] Not Found: /massmine/tst/
+[14/Mar/2019 03:07:25] WARNING [django.server:154] "GET /massmine/tst/ HTTP/1.1" 404 2645
+[14/Mar/2019 03:07:27] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:07:27] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:17:03] ERROR [django.request:228] Internal Server Error: /massmine/test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/massminetest/views.py", line 18, in test
+    return HttpResponse(x)
+NameError: name 'x' is not defined
+[14/Mar/2019 03:17:03] ERROR [django.server:154] "GET /massmine/test/ HTTP/1.1" 500 69297
+[14/Mar/2019 03:17:03] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:17:03] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:18:06] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:18:06] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:18:17] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:18:17] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:20:57] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:20:57] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 03:25:46] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 03:25:46] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:50:10] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:50:10] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:59:05] ERROR [django.server:154] "GET /massmine/test/ HTTP/1.1" 500 59
+[13/Mar/2019 23:02:00] ERROR [django.request:228] Internal Server Error: /massmine/test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/base.py", line 75, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'massmintest'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/massminetest/views.py", line 22, in request
+    return render(request, 'massminetest/index.html')
+  File "/usr/local/lib/python3.6/dist-packages/django/shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/base.py", line 86, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'massmintest' is not a registered namespace
+[13/Mar/2019 23:02:00] ERROR [django.server:154] "GET /massmine/test/ HTTP/1.1" 500 152852
+[13/Mar/2019 23:03:43] ERROR [django.request:228] Internal Server Error: /massmine/test/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/massminetest/views.py", line 22, in request
+    return render(request, 'massminetest/index.html')
+  File "/usr/local/lib/python3.6/dist-packages/django/shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/base.py", line 90, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 622, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'test' not found. 'test' is not a valid view function or pattern name.
+[13/Mar/2019 23:03:43] ERROR [django.server:154] "GET /massmine/test/ HTTP/1.1" 500 151350
+[13/Mar/2019 23:03:43] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:03:43] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:11:28] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:11:28] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:14:28] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:14:28] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:14:53] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:14:53] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:17:20] ERROR [django.server:154] "GET /massmine/request/ HTTP/1.1" 500 59
+[14/Mar/2019 00:17:20] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:17:20] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:24:12] ERROR [django.request:228] Internal Server Error: /massmine/request/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 126, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/core/handlers/base.py", line 124, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/massminetest/views.py", line 22, in request
+    return render(request, 'massminetest/index.html')
+  File "/usr/local/lib/python3.6/dist-packages/django/shortcuts.py", line 36, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.6/dist-packages/django/template/defaulttags.py", line 442, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/base.py", line 90, in reverse
+    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+  File "/usr/local/lib/python3.6/dist-packages/django/urls/resolvers.py", line 622, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'test' not found. 'test' is not a valid view function or pattern name.
+[13/Mar/2019 23:24:12] ERROR [django.server:154] "GET /massmine/request/ HTTP/1.1" 500 151398
+[13/Mar/2019 23:24:12] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:24:12] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:27:44] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:27:44] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:27:54] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:27:54] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:34:23] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:34:23] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:38:39] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:38:39] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:39:33] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:39:33] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:40:19] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:40:19] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[13/Mar/2019 23:41:14] WARNING [django.request:228] Not Found: /favicon.ico
+[13/Mar/2019 23:41:14] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:42:00] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:42:00] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:43:01] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:43:01] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:43:14] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:43:14] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:43:16] ERROR [django.server:154] "GET /admin/login/?next=/admin/ HTTP/1.1" 500 59
+[14/Mar/2019 00:43:43] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:43:43] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:43:45] ERROR [django.server:154] "GET /admin/login/?next=/admin/ HTTP/1.1" 500 59
+[14/Mar/2019 00:43:54] ERROR [django.server:154] "GET /admin/login/?next=/admin/ HTTP/1.1" 500 59
+[14/Mar/2019 00:44:08] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:44:08] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:44:27] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:44:27] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:44:28] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:44:28] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:50:42] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:50:42] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
+[14/Mar/2019 00:50:52] WARNING [django.request:228] Not Found: /favicon.ico
+[14/Mar/2019 00:50:52] WARNING [django.server:154] "GET /favicon.ico HTTP/1.1" 404 2564
