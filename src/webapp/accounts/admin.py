@@ -6,3 +6,4 @@ from accounts.models import Profile,User
 
 
 admin.site.register(Profile)
+
