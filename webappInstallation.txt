@@ -29,16 +29,24 @@ THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VER
 19. Get to the right place: cd django
 20. Copy webappproject folder into your virtual environment:
 	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
-21. Get into working directory: cd webapp
+21. Get into the working directory: cd webapp
 
-If your database does not exist or needs to be remade, do steps 22 and 23. Otherwise skip to step 24.
 
-22. python manage.py makemigrations
-23. python manage.py migrate --run-syncdb
+Installing Massmine:
+For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it
+22: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
+23: Get into the massmine folder: cd massmine-1.1.0-linux-x86_64
+24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
+25. Get back out into the appropriate directory: cd && cd django/webapp
+
+If your database does not exist or needs to be remade, do steps 26 and 27. Otherwise skip to step 28.
+
+26. python manage.py makemigrations
+27. python manage.py migrate --run-syncdb
 
 
 Finally -
-24. Run your server!: python manage.py runserver
+28. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
