@@ -35,7 +35,7 @@ THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VER
 Installing Massmine:
 For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it
 22: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
-23: Get into the massmine folder: cd massmine-1.1.0-linux-x86_64
+23: Get into the massmine folder: cd massmine
 24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
 25. Get back out into the appropriate directory: cd && cd django/webapp
 
