@@ -26,16 +26,16 @@ THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VER
 	 scroll down to the method get_default_timezone and change the return value from 'return pytz.timezone(settings.TIME_ZONE)' to 'return pytz.timezone(settings.TIME)'
 
 18. Get back out: cd
-19. Get to the right place: cd django
-20. Copy webappproject folder into your virtual environment:
-	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
-21. Get into the working directory: cd webapp
+19. Copy webappproject folder into your virtual environment:
+	You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created.
+	Use a file manager, or else do the following command: mv -r Massmine-for-the-Masses/src/* /django/
 
 
-Installing Massmine:
+Installing Massmine: (Note to developers: only needs done the first time, don't have to repeat this step when you overwrite webapp)
 For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it
-22: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
-23: Get into the massmine folder: cd massmine-1.1.0-linux-x86_64
+20: Move massmine out to your main folder: mv django/webapp/massmine-1.1.0-linux-x86_64.zip django/
+21: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
+23: Get into the massmine folder: cd django/massmine
 24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
 25. Get back out into the appropriate directory: cd && cd django/webapp
 
@@ -49,5 +49,5 @@ Finally -
 28. Run your server!: python manage.py runserver
 
 
-You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
+You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
    
