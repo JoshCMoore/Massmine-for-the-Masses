@@ -17,19 +17,37 @@
 13. Install django: pip install django
 14. Install numpy: pip install numpy
 15. Install matplotlib: pip install matplotlib
-16. Copy webappproject folder into your virtual environment:
-	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
-17. Get into working directory: cd webapp
+
+Now for a hacky bit of code...
+
+THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VERSION, EDIT THE LINE BELOW
+16. cd environ/lib/python3.6/site-packages/django/utils
+17. (there will eventually be a script for this, but for now do it by hand) Edit the timezone.py file with the following:
+	 scroll down to the method get_default_timezone and change the return value from 'return pytz.timezone(settings.TIME_ZONE)' to 'return pytz.timezone(settings.TIME)'
+
+18. Get back out: cd
+19. Copy webappproject folder into your virtual environment:
+	You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created.
+	Use a file manager, or else do the following command: mv -r Massmine-for-the-Masses/src/* /django/
 
 
-If your database does not exist or needs to be remade, do steps 18 and 19. Otherwise skip to step 20.
+Installing Massmine: (Note to developers: only needs done the first time, don't have to repeat this step when you overwrite webapp)
+For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it
+20: Move massmine out to your main folder: mv django/webapp/massmine-1.1.0-linux-x86_64.zip django/
+21: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
+23: Get into the massmine folder: cd django/massmine
+24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
+25. Get back out into the appropriate directory: cd && cd django/webapp
 
-18. python manage.py makemigrations
-19. python manage.py migrate --run-syncdb
+If your database does not exist or needs to be remade, do steps 26 and 27. Otherwise skip to step 28.
+
+26. python manage.py makemigrations
+27. python manage.py migrate --run-syncdb
 
 
 Finally -
-20. Run your server!: python manage.py runserver
+28. Run your server!: python manage.py runserver
 
-You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
+
+You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
    

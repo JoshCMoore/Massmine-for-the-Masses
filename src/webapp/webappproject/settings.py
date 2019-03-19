@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'analysis',
+    'query',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME = 'UTC'
+
+TIME_ZONE = ''
 
 USE_I18N = True
 

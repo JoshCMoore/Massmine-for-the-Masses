@@ -6,7 +6,7 @@
     <h1>Analysis Creation</h1>
     {% if user.is_authenticated %}
 	<h3>Enter which study you would like an analysis on.</h3>
-	<form method="post" action="{% url 'analysis:create_analysis' %}">
+	<form method="post" action="{% url 'analysis:create_analysis' %}" target="_blank">
 		{% csrf_token %}
 		<label for="studyid">Enter Study ID:</label>
 		<input type="text" name="studyid" placeholder="Ex. 123456789">
@@ -28,7 +28,7 @@
 		<option value="location">Sort by country</option>
 
 	</select>	
-	
+
 	<input type="submit" value="Create Analysis">
 	</form>
     {% else %}

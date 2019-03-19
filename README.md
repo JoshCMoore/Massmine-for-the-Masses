@@ -5,6 +5,9 @@ A web application that allows a user to create queries for Twitter data in a sim
 # Documentation Report (Last updated Feb. 27, 2019)
 https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
 
+#Slides 
+https://docs.google.com/presentation/d/1uO9E6uzCMvY16zW5k5j3LiHBbEx0g-w2cCiQJSXQaLY/edit?usp=sharing
+
 # Roles
 Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at
 

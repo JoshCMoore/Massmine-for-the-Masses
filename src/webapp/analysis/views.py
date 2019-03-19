@@ -1,6 +1,5 @@
 # analysis/views.py
 
-
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
@@ -12,7 +11,6 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import io
-
 
 @login_required
 def analysis(request):
