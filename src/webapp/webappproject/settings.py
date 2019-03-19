@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-	'massminetest',
+    'analysis',
 ]
 
 MIDDLEWARE = [
@@ -68,9 +68,6 @@ TEMPLATES = [
         },
     },
 ]
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WSGI_APPLICATION = 'webappproject.wsgi.application'
 
@@ -110,75 +107,24 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = ''
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'home'
+USE_TZ = True
 
-
-# Can't use https until a production server is in use
-
-SESSION_COOKIE_SECURE = False 
-CSRF_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = False
-
-# Logging information
-# To use this logger in any of the python files, add this to the top of the file: import logging
-# log = =logging.get(Logger(__name__)
-# The logger can then be used as such: log.info("MESSAGE")
-# There are also other log functions such as log.alert and log.error
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'standard': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-    },
-    'handlers': {
-        'null': {
-            'level':'DEBUG',
-            'class':'logging.NullHandler',
-        },
-        'logfile': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
-            'filename': "./logfile",
-            'maxBytes': 50000,
-            'backupCount': 2,
-            'formatter': 'standard',
-        },
-        'console':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter': 'standard'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['console'],
-            'propagate': True,
-            'level':'WARN',
-        },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        '': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-    }
-}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/accounts/user_login/'
+
+LOGIN_EXEMPT_URLS = (
+	r'^account/logout/$',
+	r'^account/register/$',)
+
+

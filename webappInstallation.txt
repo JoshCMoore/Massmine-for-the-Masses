@@ -15,11 +15,21 @@
 11. Create virtual enviornment: python3 -m virtualenv environ -p python3
 12. Activate environment: source environ/bin/activate
 13. Install django: pip install django
-14. Copy webappproject folder into your virtual environment:
+14. Install numpy: pip install numpy
+15. Install matplotlib: pip install matplotlib
+16. Copy webappproject folder into your virtual environment:
 	Use file manager for this. You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created
-15. Get into working directory: cd webapp
-16. Run your server!: python manage.py runserver
+17. Get into working directory: cd webapp
 
+
+If your database does not exist or needs to be remade, do steps 18 and 19. Otherwise skip to step 20.
+
+18. python manage.py makemigrations
+19. python manage.py migrate --run-syncdb
+
+
+Finally -
+20. Run your server!: python manage.py runserver
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source webenviron/bin/activate
    

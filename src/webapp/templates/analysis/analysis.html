@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block body_block %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Analysis Creation</h1>
+    {% if user.is_authenticated %}
+	<h3>Enter which study you would like an analysis on.</h3>
+	<form method="post" action="{% url 'analysis:create_analysis' %}">
+		{% csrf_token %}
+		<label for="studyid">Enter Study ID:</label>
+		<input type="text" name="studyid" placeholder="Ex. 123456789">
+		
+	<h3>You may sort this study based on the following options.</h3>
+	<label for="analysis_type"> Pick an analysis:</label>
+	<select name="analysis_select">
+		<option value="tweet_type">Sort by tweet type</option>
+		<option value="freq_words">Sort by the most frequently used words</option>
+		<option value="freq_hashtags">Sort by the most frequently used hashtags</option>
+		<option value="act_authors">Sort by most active authors</option>
+		<option value="pop_authors">Sort by authors with the most followers</option>
+		<option value="men_accounts">Sort by most mentioned accounts</option>
+		<option value="lang">Sort by language</option>
+		<option value="device">Sort by source device</option>
+		<option value="date">Sort by date</option>		
+		<option value="times_retweeted">Sort by number of retweets</option>
+		<option value="times_favorited">Sort by number of favorites</option>
+		<option value="location">Sort by country</option>
+
+	</select>	
+	
+	<input type="submit" value="Create Analysis">
+	</form>
+    {% else %}
+        <h2>Must be logged in to create an anlysis.</h2>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
