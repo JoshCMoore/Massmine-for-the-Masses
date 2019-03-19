@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$',views.index,name='index'),
     url(r'^accounts/',include('accounts.urls', namespace='accounts')),
     url(r'^analysis/',include('analysis.urls')),
+    url(r'^query/',include('query.urls')),
 ]
