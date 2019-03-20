@@ -12,40 +12,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import io
 
-from django.views.generic.base import TemplateView
-import plotly
-import plotly.offline
-import plotly.graph_objs
-
-@login_required
-def graph(request):
-    g = Graph(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
-
-
-@login_required
-class Graph(TemplateView):
-    template_name = 'graph.html'
-    
-    def __init__(self, name):
-        self.name = name
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        x = [-1,0,1,3,7,9]
-        y = [i**2 -i+2 for i in x]
-        stuff_to_display = plotly.graph_objs.Scatter(x=x, y=y, marker={'color': 'blue', 'symbol': 104, 'size': 10}, mode = "lines", name = "Example Graph")
-        
-        data = plotly.graph_objs.Data([stuff_to_display])
-        layout = plotly.graph_objs.Layout(title = "My Example", xaxis={'title': 'x values'}, yaxis={'title':'y values'})
-        figure  = plotly.graph_objs.Figure(data=data, layout=layout)
-        div = plotly.offline.plot(figure, auto_open=False, output_type='div')
-
-        context['graph'] = div
-        return context
-
 @login_required
 def analysis(request):
     return render(request, 'analysis/analysis.html', {})
