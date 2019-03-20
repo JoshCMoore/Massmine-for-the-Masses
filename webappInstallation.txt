@@ -34,14 +34,14 @@ THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VER
 Installing Massmine: (Note to developers: only needs done the first time, don't have to repeat this step when you overwrite webapp)
 For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it
 20: Move massmine out to your main folder: mv django/webapp/massmine-1.1.0-linux-x86_64.zip django/
-21: Unzip the Massmine zip file: unzip massmine-1.1.0-linux-x86_64
-23: Get into the massmine folder: cd django/massmine
+21: Unzip the Massmine zip file: unzip django/massmine-1.1.0-linux-x86_64
+23: Get into the massmine folder: cd django/massmine-1.1.0-linux-x86_64/massmine
 24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
 25. Get back out: cd
 
 Installing JSAN: (Again, developers, you only have to do this once)
 JSAN 1.4.0 is included in the webapp folder.
-26. Move jsan out to your main folder: mv django/webapp/jsan-1.4.0-linux-x86_64.zip
+26. Move jsan out to your main folder: mv django/webapp/jsan-1.4.0-linux-x86_64.zip django/
 27. Unzip the jsan zip file: unzip jsan-1.4.0-linux-x86_64
 28. Get into jsan folder: cd django/jsan
 29. Make jsan executable: sudo ln -s `pwd`/jsan /usr/local/bin
