@@ -33,33 +33,31 @@ Only developers do step 19, everyone else skip to step 20
 20. Get back out to your home directory: cd  
 21. Copy webappproject folder into your virtual environment:
 	You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created.
-	Use a file manager, or else do the following command: mv Massmine-for-the-Masses/src/* django/
+	Use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
 
 
 Installing Massmine: (Note to developers: only needs done the first time, don't have to repeat this step when you overwrite webapp)
 For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-22: Move massmine out to your main folder: mv django/webapp/massmine-1.1.0-linux-x86_64.zip django/
-23: Unzip the Massmine zip file: unzip django/massmine-1.1.0-linux-x86_64 -d django/
-24: Get into the massmine folder: cd django/massmine
-25. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
-26. Get back out: cd
+22: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
+23: Get into the massmine folder: cd django/massmine
+24. Make massmine executable (may ask for your password): sudo ln -s `pwd`/massmine /usr/local/bin
+25. Get back out: cd
 
 Installing JSAN: (Again, developers, you only have to do this once)
 JSAN 1.4.0 is included in the webapp folder. The github for it is: https://github.com/n3mo/jsan
-27. Move jsan out to your main folder: mv django/webapp/jsan-1.4.0-linux-x86_64.zip django/
-28. Unzip the jsan zip file: unzip django/jsan-1.4.0-linux-x86_64 -d django/
-29. Get into jsan folder: cd django/jsan
-30. Make jsan executable: sudo ln -s `pwd`/jsan /usr/local/bin
-31. Get back out into the appropriate directory: cd && cd django/webapp
+26. Unzip the jsan zip file: unzip django/webapp/jsan-1.4.0-linux-x86_64 -d django/
+27. Get into jsan folder: cd django/jsan
+28. Make jsan executable: sudo ln -s `pwd`/jsan /usr/local/bin
+29. Get back out into the appropriate directory: cd && cd django/webapp
 
-If your database does not exist or needs to be remade, do steps 32 and 33. Otherwise skip to step 34.
+If your database does not exist or needs to be remade, do steps 30 and 31. Otherwise skip to step 32.
 
-32. python manage.py makemigrations
-33. python manage.py migrate --run-syncdb
+30. python manage.py makemigrations
+31. python manage.py migrate --run-syncdb
 
 
 Finally -
-34. Run your server!: python manage.py runserver
+32. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
