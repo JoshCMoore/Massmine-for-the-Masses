@@ -1,9 +1,0 @@
-Linux (Ubuntu 18.04 tested) host with the following installed:
-
-python3 - necessary for python scripting and commands
-django - web application framework
-pip  - used to install additional tools
-numpy  - used for analysis
-matplotlib - used for analysis
-
-
