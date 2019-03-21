@@ -11,7 +11,7 @@ class Tweet(models.Model):
 	# from tweet object api
 	#created_at = models.DateTimeField(blank=False)
 	tweet_id_str = models.CharField(max_length=100, primary_key=True) # string of tweet ID
-	'''text = models.TextField(max_length=280,blank=False) # text of tweet
+	text = models.TextField(max_length=280,blank=False) # text of tweet
 	country = models.CharField(max_length=200) #within place[]
 	device = models.CharField(max_length=100, blank=True)
 	truncated = models.BooleanField(null=True)
@@ -38,4 +38,3 @@ class Tweet(models.Model):
 	utc_offset = models.IntegerField(null=True)
 	time_zone = models.TimeZoneField(null=True)
 	geo_enabled = models.BooleanField(blank=False, null=False)
-'''
