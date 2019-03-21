@@ -59,7 +59,7 @@ def edit_user_profile(request):
     return render(request, 'accounts/edit_profile.html', 
             {'user_form':user_form, 'profile_form': profile_form})
 
-
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
