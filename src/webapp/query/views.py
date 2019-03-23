@@ -5,12 +5,14 @@ from django.core.management import call_command
 from django.http import HttpResponse
 from django.urls import reverse
 from query.models import Tweet
+from analysis.models import Study
 import pandas as pd
-import numpy as np
+#import numpy as np
 import datetime
 import subprocess
 import json
 import os
+import time
 
 def index(request):
 	return render(request, 'index.html')
@@ -28,21 +30,21 @@ def make_query(request):
 	str3 = " | jsan --output="
 	str4 = ".csv"
 
-	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + "\""+keyword+"\"" + str4
+	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + keyword + str4
 
-	os.system(command)
 
-	df = pd.read_csv('/home/parallels/django/webapp/'+keyword+'.csv')
+	print(os.popen('pwd').read())
+	df = pd.read_csv('/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/'+keyword+'.csv')
+
+	new_study = Study(user="MEEEE",study_id=keyword+str(int(time.time())))
+	new_study.save()
 
 	for row in df.iterrows():
 	    for x in range(1,len(row)):
-	    	#need code here to insert into DB
-	        #created_at = row[x]['created_at']
-	        tweet_id_str = row[x]['id_str']
-	        #print(tweet_id_str)
-	        text = row[x]['text']
-	        tweet_instance = Tweet.objects.create()
-	        tweet_instance.save(tweet_id_str)
+	        id_str = row[x]['id_str']
+	        tweet_text = row[x]['text']
+	        new_study.tweets.create(tweet_id_str = id_str,text = tweet_text)
+	new_study.save()
 
 	return HttpResponse("Success!")
 

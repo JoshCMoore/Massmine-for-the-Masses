@@ -1,0 +1,5 @@
+Study.objects.get(study_id=30595).tweets.get(tweet_id_str=1108883217128607744)
+
+Study.objects.get(study_id=30595).tweets.all()
+
+res = Study.objects.filter(study_id=30595)
