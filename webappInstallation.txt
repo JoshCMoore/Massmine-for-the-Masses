@@ -4,6 +4,9 @@
 1. Install an Ubuntu VM - 18.04 tested
 2. Install git: sudo apt-get install git
 3. Install pip: sudo apt install python3-pip
+
+NEW: sudo apt-get install rabbitmq-server
+
 4. Install virtualenv: python3 -m pip install virtualenv
 5. Make a working directory: mkdir django
 6. Go into working directoy: cd django
@@ -15,6 +18,9 @@
 12. Install plotly: pip install plotly
 13. Install cufflinks: pip install cufflinks
 14. Install pandas: pip install pandas
+
+NEW: pip install celery
+NEW: pip install django-celery-results 
 
 Now for a hacky bit of code...
 
@@ -53,6 +59,7 @@ If your database does not exist or needs to be remade, do steps 27 and 28. Other
 28. python manage.py makemigrations
 29. python manage.py migrate --run-syncdb
 
+NEW: python manage.py migrate django_celery_results
 
 Finally -
 30. Run your server!: python manage.py runserver

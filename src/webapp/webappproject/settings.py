@@ -25,6 +25,11 @@ SECRET_KEY = 'ho$s-fx6=+zr8c2#pk_z0bx!zs4jg&(sen@c9&a+ws3(j^tgw('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+#Celery settings
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'django-cache'
+
 ALLOWED_HOSTS = []
 
 
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'analysis',
     'query',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
