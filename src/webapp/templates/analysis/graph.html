@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body_block %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Analysis</h1>
+    {% if user.is_authenticated %}
+	{% if graph %}
+	<div style = "width:600;height:500">
+		{{ graph|safe }}
+	</div>
+	{% endif %}
+    {% else %}
+        <h2>Must be logged in to view an anlysis.</h2>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
