@@ -6,10 +6,10 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webappproject.settings')
 
-app = Celery('webapp', broker='amqp://', backend='amqup://')
+app = Celery('webapp', broker='amqp://', backend='amqp://')
 
 #Gives celery config keys the CELERY prefix
-app.config_from_object('django.confg:settings', namespace='CELERY')
+app.config_from_object('django.conf:settings', namespace='CELERY')
 
 #Load all task modules
 app.autodiscover_tasks()
