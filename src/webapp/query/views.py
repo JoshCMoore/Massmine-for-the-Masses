@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.http import HttpResponse
 from django.urls import reverse
 import datetime
-import subprocess
+from subprocess import Popen, PIPE
 import json
 import os
 
@@ -21,9 +21,10 @@ def make_query(request):
 	count = request.POST.get('count')
 	
 	#process = subprocess.Popen(['touch test.txt'])
-
-	os.system('massmine --task=twitter-search --count=200 --query=love --output=mydata.json')
-
-	return HttpResponse("success")
+	command = 'massmine --task=twitter-search --count=' + count + ' --query=' + keyword 
+	#os.system('massmine --task=twitter-search --count=200 --query=love --output=mydata.json')
+	stdout = Popen(command, shell=True, stdout=PIPE).stdout 
+	output = stdout.read()
+	return HttpResponse(output)
 
 	# massmine --task=twitter-search --count=200 --query=love --output=mydata.json
