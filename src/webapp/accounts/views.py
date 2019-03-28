@@ -1,18 +1,27 @@
 # accounts/views.py
 
-from django.shortcuts import render
-from accounts.forms import UserForm,UserProfileInfoForm
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from accounts.forms import UserRegistrationForm, ProfileForm, EditUserForm
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
+from django.db import transaction
 
 def index(request):
     return render(request,'index.html')
 
+def login_error(request):
+    return render(request,'login_error.html')
+
+def account_inactive_error(request):
+    return render(request,'account_inactive_error.html')
+
 @login_required
-def special(request):
-    return HttpResponse("You are logged in !")
+def password_change_error(request):
+    return render(request,'password_change_error.html')
 
 @login_required
 def user_logout(request):
@@ -20,27 +29,52 @@ def user_logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 def register(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileInfoForm(data=request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
+    if request.method =='POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.oauth = form.cleaned_data.get('oauth')
+            user.profile.bio = form.cleaned_data.get('bio')
             user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            profile.save()
-            registered = True
-        #else:
-            #Do nothing, user form was not valid
+            return render(request, 'index.html')
     else:
-        user_form = UserForm()
-        profile_form = UserProfileInfoForm()
-    return render(request,'accounts/registration.html',
-                          {'user_form':user_form,
-                           'profile_form':profile_form,
-                           'registered':registered})
+        form = UserRegistrationForm()
+    return render(request, 'accounts/registration.html', 
+            {'form':form})
+
+@login_required
+@transaction.atomic
+def edit_user_profile(request):
+    if request.method == 'POST':
+        user_form = EditUserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect(reverse('index'))
+    else:
+        user_form = EditUserForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'accounts/edit_profile.html', 
+            {'user_form':user_form, 'profile_form': profile_form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('index'))
+        else:
+            return render(request,'accounts/password_change_error.html', {})
+	    #form not valid
+    else:
+        form = PasswordChangeForm(user=request.user)
+        args = {'form': form}
+        return render(request,'accounts/change_password.html', args)
 
 def user_login(request):
     if request.method == 'POST':
@@ -52,8 +86,9 @@ def user_login(request):
                 login(request,user)
                 return HttpResponseRedirect(reverse('index'))
             else:
-                return HttpResponse("Your account was inactive.")
+                return render(request,'accounts/account_inactive_error.html',{})
         else:
-            return HttpResponse("Invalid login details given")
+            return render(request,'accounts/login_error.html', {}) 
+	    #username or password incorrect
     else:
         return render(request, 'accounts/login.html', {})
