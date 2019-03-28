@@ -20,6 +20,12 @@ def index(request):
 def request_page(request):
 	return render(request, 'query/query.html', {})
 
+def get_studies(request):
+	context ={'studies_html':""} 
+	for x in Study.objects.all():
+		context['studies_html']+=("<li>"+x.study_id[:-10]+"</li>")
+	return render(request, 'query/get_studies.html', context)
+
 def make_query(request):
 	
 	keyword = request.POST.get("keyword")
@@ -32,19 +38,23 @@ def make_query(request):
 
 	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + keyword + str4
 
-
-	print(os.popen('pwd').read())
+	os.system(command)
+	
 	df = pd.read_csv('/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/'+keyword+'.csv')
-
-	new_study = Study(user="MEEEE",study_id=keyword+str(int(time.time())))
+	new_study = Study(user=str(request.user),study_id=keyword+str(int(time.time())))
 	new_study.save()
 
 	for row in df.iterrows():
-	    for x in range(1,len(row)):
-	        id_str = row[x]['id_str']
-	        tweet_text = row[x]['text']
-	        new_study.tweets.create(tweet_id_str = id_str,text = tweet_text)
-	new_study.save()
+		for x in range(1,len(row)):
+			id_str = row[x]['id_str']
+			tweet_text = row[x]['text']
+			tweet_country = row[x]['user:location']
+			tweet_device = row[x]['device']
+			tweet_retweet_count = row[x]['retweet_count']
+			tweet_lang = row[x]['lang']
+			tweet_user = row[x]['screen_name']
+			tweet_followers_count = row[x]['followers_count']
+			new_study.tweets.create(tweet_id_str = id_str,text = tweet_text, country = tweet_country, device = tweet_device, retweet_count = tweet_retweet_count, lang = tweet_lang, screen_name = tweet_user, followers_count = tweet_followers_count)
 
 	return HttpResponse("Success!")
 
