@@ -46,26 +46,21 @@ INSTALING MASSMINE (first installation only)
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
 	27: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
 	28. Make massmine executable (may ask for your password): sudo ln -s django/massmine/massmine /usr/local/bin
-
-INSTALLING JSAN: (first installation only)
-	JSAN 1.4.0 is included in the webapp folder. The github for it is: https://github.com/n3mo/jsan
-	29. Unzip the jsan zip file: unzip django/webapp/jsan-1.4.0-linux-x86_64 -d django/
-	30. Make jsan executable: sudo ln -s django/jsan/jsan /usr/local/bin
-	31. Get into the appropriate directory: cd django/webapp
+	
 
 MAKING YOUR ENCRYPTION KEY
-
-	NEW: 32. FIELD_ENCRYPTION_KEY=$( python manage.py generate_encryption_key)
-	NEW: 33. export FIELD_ENCRYPTION_KEY 
+	29. Get into the appropriate directory: cd django/webapp
+	NEW: 30. FIELD_ENCRYPTION_KEY=$( python manage.py generate_encryption_key)
+	NEW: 31. export FIELD_ENCRYPTION_KEY 
 
 CREATING DATABASE
-	34. python manage.py makemigrations
-	35. python manage.py migrate --run-syncdb
-	36. python manage.py migrate django_celery_results
+	32. python manage.py makemigrations
+	33. python manage.py migrate --run-syncdb
+	34. python manage.py migrate django_celery_results
 	OPTIONAL: if you want an admin, do: python manage.py createsuperuser and walk through the options to create one
 
 STARTING THE SERVER
-	37. Run your server!: python manage.py runserver
+	35. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate

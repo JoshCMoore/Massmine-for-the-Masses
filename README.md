@@ -11,20 +11,12 @@ https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/
 # Slides 
 https://docs.google.com/presentation/d/1uO9E6uzCMvY16zW5k5j3LiHBbEx0g-w2cCiQJSXQaLY/edit?usp=sharing
 
-# Roles
-Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at
+# Roles and Subsystems.
+Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at. Managing User Account subsystem.
 
-Josh Moore: Meme Finder - Looking for problems in what we've written 
+Josh Moore: Meme Finder - Looking for problems in what we've written. Managing Massmine Integration subsystem.
 
-Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice
+Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice. Managing Query subsystem.
 
-Morgan McIntyre: Professional Googler - Research and communication
+Morgan McIntyre: Professional Googler - Research and communication. Managing Analysis subsystem.
 
-# Subsystems
-Patricia Tanzer: User Account Management
-
-Josh Moore: Massmine Integration
-
-Logan Hornbuckle: Study Creation
-
-Morgan McIntyre: Analysis Creation
