@@ -26,44 +26,46 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	16. Install celery for async support: pip install celery
 	17. Install django celery backend: pip install django-celery-results 
 
-	NEW: pip install django-encrypted-model-fields
-	
+	NEW: 18.  pip install django-encrypted-model-fields
 
 FIXING TIMEZONE ERROR
-	18. cd environ/lib/python3.6/site-packages/django/utils
-	19. Edit the timezone.py file with the following:
+	19. cd environ/lib/python3.6/site-packages/django/utils
+	20. Edit the timezone.py file with the following:
 	 scroll down to the method get_default_timezone and change the return value from 'return pytz.timezone(settings.TIME_ZONE)' to 'return pytz.timezone(settings.TIME)'
 
 REPOSITORY CODE INSTALLATION
-	20. Get back out: cd
-	21. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
-	22. Get into cloned directory: cd Massmine-for-the-Masses
-
-DEVELOPERS ONLY
-	23. Checkout the right branch (for example, I do: git checkout patanzer)
-
-	24. Get back out to your home directory: cd  
-	25. Copy webappproject folder into your virtual environment:
-	You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created. You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
+	21. Get back out: cd
+	22. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	23. Get into cloned directory: cd Massmine-for-the-Masses
+	24. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
+	25. Get back out to your home directory: cd  
+	26. Copy webappproject folder into your virtual environment:
+	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
 
 INSTALING MASSMINE (first installation only)
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
-	27. Make massmine executable (may ask for your password): sudo ln -s django/massmine/massmine /usr/local/bin
+	27: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
+	28. Make massmine executable (may ask for your password): sudo ln -s django/massmine/massmine /usr/local/bin
 
 INSTALLING JSAN: (first installation only)
 	JSAN 1.4.0 is included in the webapp folder. The github for it is: https://github.com/n3mo/jsan
-	28. Unzip the jsan zip file: unzip django/webapp/jsan-1.4.0-linux-x86_64 -d django/
-	29. Make jsan executable: sudo ln -s django/jsan/jsan /usr/local/bin
-	30. Get into the appropriate directory: cd django/webapp
+	29. Unzip the jsan zip file: unzip django/webapp/jsan-1.4.0-linux-x86_64 -d django/
+	30. Make jsan executable: sudo ln -s django/jsan/jsan /usr/local/bin
+	31. Get into the appropriate directory: cd django/webapp
 
-UPDATING OR CREATING DATABASE (can skip this section if no changes)
-	31. python manage.py makemigrations
-	32. python manage.py migrate --run-syncdb
-	33. python manage.py migrate django_celery_results
+MAKING YOUR ENCRYPTION KEY
+
+	NEW: 32. FIELD_ENCRYPTION_KEY=$( python manage.py generate_encryption_key)
+	NEW: 33. export FIELD_ENCRYPTION_KEY 
+
+CREATING DATABASE
+	34. python manage.py makemigrations
+	35. python manage.py migrate --run-syncdb
+	36. python manage.py migrate django_celery_results
+	OPTIONAL: if you want an admin, do: python manage.py createsuperuser and walk through the options to create one
 
 STARTING THE SERVER
-	34. Run your server!: python manage.py runserver
+	37. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
