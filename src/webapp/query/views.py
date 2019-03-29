@@ -48,12 +48,12 @@ def make_query(request):
 		for x in range(1,len(row)):
 			id_str = row[x]['id_str']
 			tweet_text = row[x]['text']
-			tweet_country = row[x]['user:location']
-			tweet_device = row[x]['device']
+			tweet_country = row[x]['place:country_code']
+			tweet_device = row[x]['source']
 			tweet_retweet_count = row[x]['retweet_count']
 			tweet_lang = row[x]['lang']
-			tweet_user = row[x]['screen_name']
-			tweet_followers_count = row[x]['followers_count']
+			tweet_user = row[x]['user:screen_name']
+			tweet_followers_count = row[x]['user:followers_count']
 			new_study.tweets.create(tweet_id_str = id_str,text = tweet_text, country = tweet_country, device = tweet_device, retweet_count = tweet_retweet_count, lang = tweet_lang, screen_name = tweet_user, followers_count = tweet_followers_count)
 
 	return HttpResponse("Success!")
