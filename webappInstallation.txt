@@ -26,6 +26,9 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	16. Install celery for async support: pip install celery
 	17. Install django celery backend: pip install django-celery-results 
 
+	NEW: pip install django-encrypted-model-fields
+	
+
 FIXING TIMEZONE ERROR
 	18. cd environ/lib/python3.6/site-packages/django/utils
 	19. Edit the timezone.py file with the following:

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'analysis',
     'query',
     'django_celery_results',
+    'encrypted_model_fields',
 ]
 
 MIDDLEWARE = [
@@ -145,4 +146,9 @@ LOGIN_EXEMPT_URLS = (
 	r'^account/logout/$',
 	r'^account/register/$',)
 
+# Encryption Setup
+#USING HARDCODED VALUE FOR TESTING, DO NOT!!!!!!!!!! USE IN DEVELOPMENT
 
+FIELD_ENCRYPTION_KEY = '6TsTsZwyIizTcU22suMpKh9nhUWfFX13-0qFhu26goE='
+
+#FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY','')
