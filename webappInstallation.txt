@@ -2,7 +2,7 @@
 #How to install Massmine-for-the-Masses
 
 GET YOURSELF A VM
-	1. Install an Ubuntu VM - 18.04 tested
+	1. Install an Ubuntu VM - 18.04 tested. There's guides for this everywhere, please don't ask us.
 
 BASIC TOOLS TO INSTALL THE REST OF IT
 	2. Install git: sudo apt-get install git
