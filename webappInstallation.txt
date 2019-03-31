@@ -62,7 +62,6 @@ CREATING DATABASE
 	OPTIONAL: if you want an admin, do: python django/webapp/manage.py createsuperuser and walk through the options to create one
 
 STARTING THE SERVER
-	NEW: 35. Starting the rabbitmq service: rabbitmq-server
 	36. Run your server!: python django/webapp/manage.py runserver
 
 
