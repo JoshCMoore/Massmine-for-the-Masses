@@ -26,3 +26,5 @@ class EditUserForm(forms.ModelForm):
             'email',
             'first_name',
             'last_name')
+
+
