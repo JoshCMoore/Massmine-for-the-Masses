@@ -9,7 +9,7 @@ from analysis.models import Study
 import pandas as pd
 #import numpy as np
 import datetime
-import subprocess
+from subprocess import Popen, PIPE
 import json
 import os
 import time
@@ -59,3 +59,11 @@ def make_query(request):
 	return HttpResponse("Success!")
 
 	# massmine --task=twitter-stream --query=love --count=200 | jsan --output=mydata.csv
+# 	#process = subprocess.Popen(['touch test.txt'])
+# 	command = 'massmine --task=twitter-search --count=' + count + ' --query=' + keyword 
+# 	#os.system('massmine --task=twitter-search --count=200 --query=love --output=mydata.json')
+# 	stdout = Popen(command, shell=True, stdout=PIPE).stdout 
+# 	output = stdout.read()
+# 	return HttpResponse(output)
+# 
+#  	# massmine --task=twitter-search --count=200 --query=love --output=mydata.json

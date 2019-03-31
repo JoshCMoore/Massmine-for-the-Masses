@@ -19,11 +19,25 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: keep the secret key used in production secret! THIS ONE IS ON GITHUB AND IS DEFINITELY NOT SECRET
 SECRET_KEY = 'ho$s-fx6=+zr8c2#pk_z0bx!zs4jg&(sen@c9&a+ws3(j^tgw('
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+
+#Celery settings
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_BACKEND = 'django-cache'
+
+#Not sure if we'll need these settings, leaving them commented out
+#CELERY_ACCEPT_CONTENT = [json]
+#CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+#CELERY_TASK_SERIALIZER = 'json'
+
+
+
 
 ALLOWED_HOSTS = []
 
@@ -40,6 +54,7 @@ INSTALLED_APPS = [
     'accounts',
     'analysis',
     'query',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
