@@ -6,7 +6,7 @@ from celery import Celery
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webappproject.settings')
 
-app = Celery('webapp', broker='amqp://', backend='amqp://')
+app = Celery('webapp')
 
 #Gives celery config keys the CELERY prefix
 app.config_from_object('django.conf:settings', namespace='CELERY')
