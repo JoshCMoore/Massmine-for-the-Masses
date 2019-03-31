@@ -8,8 +8,10 @@ from encrypted_model_fields.fields import EncryptedCharField
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    bio = models.TextField(max_length=500, blank=True)
-    oauth =  EncryptedCharField(max_length=50, blank=True)
+    consumer_key =  EncryptedCharField(max_length=50, blank=True)
+    consumer_secret = EncryptedCharField(max_length=50, blank=True)
+    access_token = EncryptedCharField(max_length=50, blank=True)
+    access_token_secret = EncryptedCharField(max_length=50, blank=True)
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
