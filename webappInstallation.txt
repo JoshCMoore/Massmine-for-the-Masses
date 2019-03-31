@@ -24,7 +24,7 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	14. Install pandas: pip install pandas
 	NEW: 15. Install celery for async support: pip install celery
 	NEW: 16. Install erlang: apt-get install -y erlang
-	NEW: 17. Install rabbitmq-server apt-get install rabbitmq-server
+	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
 	NEW: 18. Install django celery backend: pip install django-celery-results 
 	NEW: 19.  pip install django-encrypted-model-fields
 
