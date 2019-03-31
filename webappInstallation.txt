@@ -47,14 +47,18 @@ INSTALING MASSMINE
 MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
 	28. Replace problem variable: sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
 	29. Remove any old keys: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py
-	30. Add variable to activate script: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
-	31. Update settings.py to use the new key: echo "FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY','')" >> django/webapp/webappproject/settings.py
+	30. Insert a dummy key to use while generating a new one: echo "FIELD_ENCRYPTION_KEY = '6-QgONW6TUl5rt4Xq8u-wBwPcb15sIYS2CN6d69zueM='" >> django/webapp/webappproject/settings.py
+	31. Add variable to activate script so it stays around: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
+	32. Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'" >> django/webapp/webappproject/settings.py
+	# Originally the line in settings should have read: FIELD_ENCRYPTION_KEY = os.environ.get(‘FIELD_ENCRYPTION_KEY’, ‘’), 
+	# However, due to errors in testing, we keep the hardcoded value instead. 
+	# As a result, it is HIGHlY advised you strip this key from your settings before uploading to a public repository.
 
 
 CREATING DATABASE
-	32. python django/webapp/manage.py makemigrations
-	33. python django/webapp/manage.py migrate --run-syncdb
-	34. python django/webapp/manage.py migrate django_celery_results
+	33. python django/webapp/manage.py makemigrations
+	34. python django/webapp/manage.py migrate --run-syncdb
+	35. python django/webapp/manage.py migrate django_celery_results
 	OPTIONAL: if you want an admin, do: python django/webapp/manage.py createsuperuser and walk through the options to create one
 
 STARTING THE SERVER
