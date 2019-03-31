@@ -3,7 +3,7 @@ A web application that allows a user to create queries for Twitter data in a sim
 
 To build from source, take a look at the webappInstallation.txt file.
  
-Note to all users: This project is very much a work in progress. Please take precautions when installing on live systems. As this repository will not be maintained or updated after May 2019, it is advised that to fork your own branch of the project to edit and update as desired.
+Note to all users: This project is very much a work in progress. Please take precautions when installing on live systems. As this repository will not be maintained or updated after May 2019, it is advised that to fork your own branch of the project to edit and update as desired. Additionally, this project is NOT intended to be run on an external or unprotected network, as the default server employed by this project does not employ SSL or TLS for its web pages. 
 
 # Documentation Report (Last updated Mar. 17, 2019)
 https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
