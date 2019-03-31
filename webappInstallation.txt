@@ -35,7 +35,8 @@ REPOSITORY CODE INSTALLATION
 	23. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
 	24. Get back out to your home directory: cd  
 	25. Copy webappproject folder into your virtual environment:
-	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
+	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. 
+	You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
 
 INSTALING MASSMINE
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
