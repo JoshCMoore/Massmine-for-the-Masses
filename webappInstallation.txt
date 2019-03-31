@@ -68,4 +68,6 @@ STARTING THE SERVER
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
 
+If you want to have forgot password send to actual emails, you will need to either set up a smtp server or use a third party service and change details in the webapp/webappprojct/settings.py file. Currently, emails are 'sent' to a folder within the project.
+
 Note to developers: Functionality may need to be introduced that will start massmine and the rabbitmq-server automatically
