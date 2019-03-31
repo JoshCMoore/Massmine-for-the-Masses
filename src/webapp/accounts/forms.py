@@ -11,12 +11,12 @@ class ProfileForm(forms.ModelForm):
         fields = ('oauth', 'bio')
 
 class UserRegistrationForm(UserCreationForm):
-    oauth = forms.CharField(max_length = 50, help_text='Required. This is your Twitter key used to access the api.')
     bio = forms.CharField(max_length = 500, required=False)
+    oauth = forms.CharField(max_length = 50, required=True, help_text = 'You may use a gibberish key to create an account, but will need a valid Twitter oauth key to run a query successfully.')
 
     class Meta:
         model = User
-        fields = ('username', 'email','first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
 class EditUserForm(forms.ModelForm):
 
@@ -26,3 +26,5 @@ class EditUserForm(forms.ModelForm):
             'email',
             'first_name',
             'last_name')
+
+
