@@ -13,6 +13,7 @@ from subprocess import Popen, PIPE
 import json
 import os
 import time
+import csv
 
 def index(request):
 	return render(request, 'index.html')
@@ -36,11 +37,13 @@ def make_query(request):
 	str3 = " | jsan --output="
 	str4 = ".csv"
 
-	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + keyword + str4
+	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + keyword.replace(' ','_') + str4
+	
+	keyword = keyword.replace(' ','_')
 
 	os.system(command)
 	
-	df = pd.read_csv('/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/'+keyword+'.csv')
+	df = pd.read_csv('/home/josh/Documents/SeniorProject/Massmine-for-the-Masses/src/webapp/'+keyword+'.csv', error_bad_lines=False)
 	new_study = Study(user=str(request.user),study_id=keyword+str(int(time.time())))
 	new_study.save()
 
@@ -48,7 +51,10 @@ def make_query(request):
 		for x in range(1,len(row)):
 			id_str = row[x]['id_str']
 			tweet_text = row[x]['text']
-			tweet_country = row[x]['place:country_code']
+			if 'place:country_code' in row[x]:
+				tweet_country = row[x]['place:country_code']
+			else:
+				tweet_country = ''
 			tweet_device = row[x]['source']
 			tweet_retweet_count = row[x]['retweet_count']
 			tweet_lang = row[x]['lang']
