@@ -34,8 +34,10 @@ def register(request):
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
-            user.profile.oauth = form.cleaned_data.get('oauth')
-            user.profile.bio = form.cleaned_data.get('bio')
+            user.profile.consumer_key = form.cleaned_data.get('consumer_key')
+            user.profile.consumer_secret = form.cleaned_data.get('consumer_secret')
+            user.profile.access_token = form.cleaned_data.get('access_token')
+            user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
             user.save()
             return render(request, 'index.html')
     else:

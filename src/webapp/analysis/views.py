@@ -1,5 +1,14 @@
 # analysis/views.py
 
+import enchant
+import string
+import re
+import os
+import tempfile
+import logging
+from gensim import corpora
+from gensim import models
+from gensim.corpora import Dictionary
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
@@ -11,13 +20,14 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
 import io
-
+from analysis.models import Study
 from django.views.generic.base import TemplateView
 import plotly
 from plotly import tools as tls
 import plotly.offline
 import plotly.graph_objs
 from pytz import timezone
+from collections import defaultdict
 title = ''
 
 @login_required
@@ -67,10 +77,54 @@ class Histogram(TemplateView):
 
 @login_required
 def tweet_type(request):
-    title = 'Tweet Type'
-    g = BarGraph(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
+    #title = 'Tweet Type'
+    #g = BarGraph(request)
+    #context = g.get_context_data()
+    stopFile = open('/home/momo/django/webapp/analysis/stopwords.txt','r')
+    stopWords = stopFile.read().splitlines()
+    stopList = set(stopWords)
+    isNumber = re.compile('^[0-9]+$')
+
+    list = Study.objects.all()
+    id = list[2].study_id
+    offset = len(id)- 10
+    addStop = id[:offset]
+    stopList.add(addStop)
+    arr = []
+    twList = Study.objects.get(study_id=id).tweets.all()
+
+    for y in twList:
+        tempText = y.text
+        arr.append(tempText)
+    texts = []
+    d = enchant.Dict("en_US")
+    val = d.check('rt')
+    isNumber = re.compile('^[0-9]+$') 
+
+    for text in arr:
+        textwords = []
+        for word in text.lower().split():
+            #word = re.sub(r'[^\w\s]','',word)
+            #word = re.sub(r'\.+$','',word)
+            if word == '' or isNumber.search(word) == True or d.check(word) == False:
+               word = ''
+            if word not in stopList and word!='':
+               textwords.append(word)
+        texts.append(textwords)
+
+    frequency = defaultdict(int)
+    for text in texts:
+       for token in text:
+           frequency[token] += 1
+    #inverse = [(value, key) for key, value in frequency.items()]
+    top5 = []
+    for x in range(0,5):
+        topWord = sorted(frequency, key=frequency.get, reverse=True)[x]
+        top5.append(topWord)
+    #tweetText = twList[0].text
+    return HttpResponse(top5[2])
+    #return render(request, 'analysis/graph.html', context)
+
 
 @login_required
 def graph_times_retweeted(request):
