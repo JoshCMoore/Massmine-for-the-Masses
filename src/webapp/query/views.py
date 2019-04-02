@@ -54,6 +54,14 @@ def make_query(request):
 					for key,value in data['metadata'].items():
 						if (key == 'iso_language_code'):
 							language = value
+				if (key == 'entities'):
+					for key,value in data['entities'].items():
+						if (key == 'hashtags'):
+							for n in data['entities']['hashtags']:
+								if (n['text'] != None):
+									hshtg = n['text']
+								else:
+									hshtg = None
 				if (key == 'user'):
 					for key,value in data['user'].items():
 						if (key == 'id_str'):
@@ -94,16 +102,17 @@ def make_query(request):
 					reply_scrname = value
 
 			tweet = Tweet(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
-				retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
-				screen_name=scr_name,in_reply_to_status_id_str=reply_sid,
-				in_reply_to_user_id_str=reply_uid,in_reply_to_screen_name=reply_scrname,url=u,description=desc,verified=verify,
-				followers_count = fol_count,friends_count=fr_count,listed_count=list_count,favourites_count=fav_count,
-				num_tweets=tw_count,utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
+					retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
+					screen_name=scr_name,in_reply_to_status_id_str=reply_sid,in_reply_to_user_id_str=reply_uid,
+					in_reply_to_screen_name=reply_scrname,hashtags=hshtg,url=u,
+					description=desc,verified=verify,followers_count = fol_count,friends_count=fr_count,
+					listed_count=list_count,favourites_count=fav_count,num_tweets=tw_count,
+					utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
 
 			tweet.save()
 
 		except:
-			print("ERROR")
+			print("ERROR, Please Try Again")
 		
 	return HttpResponse(output)
 
