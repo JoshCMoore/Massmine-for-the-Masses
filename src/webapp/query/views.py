@@ -7,12 +7,8 @@ from django.urls import reverse
 from query.forms import QueryForm
 from query.models import Tweet
 from subprocess import Popen, PIPE
-import pandas as pd
-import numpy as np
-import datetime
 import subprocess
 import json
-import ast
 
 def index(request):
 	return render(request, 'index.html')
@@ -115,4 +111,5 @@ def make_query(request):
 			print("ERROR, Please Try Again")
 		
 	return HttpResponse(output)
+
 
