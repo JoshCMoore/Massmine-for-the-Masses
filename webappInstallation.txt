@@ -27,10 +27,10 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
 	NEW: 18. Install django celery backend: pip install django-celery-results 
 	NEW: 19.  pip install django-encrypted-model-fields
+	NEW: 20. sudo apt-get install expect
 
 REPOSITORY CODE INSTALLATION
-	20. Get back out: cd
-	21. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	21. Get back out and clone the repository: cd && git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
 	22. Get into cloned directory: cd Massmine-for-the-Masses
 	23. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
 	24. Get back out to your home directory: cd  
