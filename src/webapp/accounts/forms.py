@@ -8,12 +8,14 @@ from accounts.models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('oauth', 'bio')
+        fields = ('consumer_key', 'consumer_secret', 'access_token', 'access_token_secret')
 
 class UserRegistrationForm(UserCreationForm):
-    bio = forms.CharField(max_length = 500, required=False)
-    oauth = forms.CharField(max_length = 50, required=True, help_text = 'You may use a gibberish key to create an account, but will need a valid Twitter oauth key to run a query successfully.')
-
+    consumer_key = forms.CharField(max_length = 50, required = True)
+    consumer_secret = forms.CharField(max_length = 50, required = True)
+    access_token = forms.CharField(max_length = 50, required = True)
+    access_token_secret = forms.CharField(max_length = 50, required = True)
+    
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')

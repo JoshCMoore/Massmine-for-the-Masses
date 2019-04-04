@@ -5,12 +5,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-#import matplotlib
-#matplotlib.use('agg')
-#import matplotlib.pyplot as plt; plt.rcdefaults()
-#from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-#import matplotlib.pyplot as plt
-#import numpy as np
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt; plt.rcdefaults()
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib.pyplot as plt
+import numpy as np
 import io
 
 from django.views.generic.base import TemplateView
