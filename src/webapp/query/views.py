@@ -8,17 +8,32 @@ from query.forms import QueryForm
 from query.models import Tweet
 from accounts.models import Profile
 from subprocess import Popen, PIPE
-import subprocess
+from analysis.models import Study
+import pandas as pd
+import numpy as np
+import datetime
+import subprocess 
 import json
 import os
 import time
 import csv
+import ast
 
 def index(request):
 	return render(request, 'index.html')
 
 def request_page(request):
 	return render(request, 'query/query.html', {})
+
+def get_studies(request):
+	context ={'studies_html':""} 
+	user = request.user
+	for x in Study.objects.all():
+		print(type(x.user))
+		print(type(user))
+		if str(x.user) == str(user):
+			context['studies_html']+=("<li><a href=\"/analysis/analysis/\">"+x.study_id[:-10]+"</a></li>")
+	return render(request, 'query/get_studies.html', context)
 
 def make_query(request):
 	
@@ -31,12 +46,14 @@ def make_query(request):
 
 	output = stdout.readlines()
 
+	keyword = keyword.replace(' ','_')
+	new_study = Study(user=str(request.user),study_id=keyword+str(int(time.time())))
+	new_study.save()
+
 	for i in output:
 		string = i.decode("utf-8")
 		data = json.loads(string)
-
 		try:
-
 			for key,value in data.items():
 				if (key == 'id_str'):
 					tid = value
@@ -101,18 +118,15 @@ def make_query(request):
 				if (key == 'in_reply_to_screen_name'):
 					reply_scrname = value
 
-			tweet = Tweet(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
-					retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
-					screen_name=scr_name,in_reply_to_status_id_str=reply_sid,in_reply_to_user_id_str=reply_uid,
-					in_reply_to_screen_name=reply_scrname,hashtags=hshtg,url=u,
-					description=desc,verified=verify,followers_count = fol_count,friends_count=fr_count,
-					listed_count=list_count,favourites_count=fav_count,num_tweets=tw_count,
-					utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
+			new_study.tweets.create(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
+				retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
+				screen_name=scr_name,in_reply_to_status_id_str=reply_sid,
+				in_reply_to_user_id_str=reply_uid,in_reply_to_screen_name=reply_scrname,url=u,description=desc,verified=verify,
+				followers_count = fol_count,friends_count=fr_count,listed_count=list_count,favourites_count=fav_count,
+				num_tweets=tw_count,utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
 
-			tweet.save()
-
-		except:
-			print("ERROR, Please Try Again")
+		except Exception as e:
+			print(e)
 		
 	return HttpResponse("Success!")
 
