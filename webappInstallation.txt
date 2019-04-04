@@ -23,14 +23,14 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	13. Install cufflinks: pip install cufflinks
 	14. Install pandas: pip install pandas
 	NEW: 15. Install celery for async support: pip install celery
-	NEW: 16. Install erlang: apt-get install -y erlang
+	NEW: 16. Install erlang: sudo apt-get install -y erlang
 	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
 	NEW: 18. Install django celery backend: pip install django-celery-results 
 	NEW: 19.  pip install django-encrypted-model-fields
+	NEW: 20. sudo apt-get install expect
 
 REPOSITORY CODE INSTALLATION
-	20. Get back out: cd
-	21. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	21. Get back out and clone the repository: cd && git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
 	22. Get into cloned directory: cd Massmine-for-the-Masses
 	23. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
 	24. Get back out to your home directory: cd  
@@ -40,12 +40,12 @@ REPOSITORY CODE INSTALLATION
 
 INSTALING MASSMINE
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
-	27. Make massmine executable (may ask for your password): sudo ln -s django/massmine/massmine /usr/local/bin
+	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
+	27. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
 	
 
 MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
-	28. Replace problem variable: sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
+	28. Replace problem variable: cd && sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
 	29. (Ignore for development) Remove any old keys: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py
 	30. (Ignore for development)Insert a dummy key to use while generating a new one: echo "FIELD_ENCRYPTION_KEY = '6-QgONW6TUl5rt4Xq8u-wBwPcb15sIYS2CN6d69zueM='" >> django/webapp/webappproject/settings.py
 	31. (Ignore for development)Add variable to activate script so it stays around: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
