@@ -25,8 +25,12 @@ def request_page(request):
 
 def get_studies(request):
 	context ={'studies_html':""} 
+	user = request.user
 	for x in Study.objects.all():
-		context['studies_html']+=("<li>"+x.study_id[:-10]+"</li>")
+		print(type(x.user))
+		print(type(user))
+		if str(x.user) == str(user):
+			context['studies_html']+=("<li><a href=\"/analysis/analysis/\">"+x.study_id[:-10]+"</a></li>")
 	return render(request, 'query/get_studies.html', context)
 
 def make_query(request):
