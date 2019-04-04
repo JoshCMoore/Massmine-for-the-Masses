@@ -28,6 +28,7 @@ import plotly.offline
 import plotly.graph_objs
 from pytz import timezone
 from collections import defaultdict
+from textblob import TextBlob
 title = ''
 
 @login_required
@@ -39,20 +40,131 @@ class BarGraph(TemplateView):
 
         def get_context_data(self, **kwargs):	
                 context = super().get_context_data(**kwargs)
-                objects = ('Random', 'Words', 'Will','Go','Here')
-                y_pos = np.arange(len(objects))
-                performance = [10,8,6,4,2]
-                f = plt.figure(1)
-                plt.bar(y_pos, performance, align='center', alpha=0.5)
-                plt.xticks(y_pos, objects)
-                plt.ylabel('Times used')
-                plt.title('Most common words used')
-                plt.title(title)
-                plotly_fig = tls.mpl_to_plotly(f)
+                stopFile = open('/home/momo/django/webapp/analysis/stopwords.txt','r')
+                stopWords = stopFile.read().splitlines()
+                stopList = set(stopWords)
+                isNumber = re.compile('^[0-9]+$')
+
+                list = Study.objects.all()
+                id = list[6].study_id
+                offset = len(id)- 10
+                addStop = id[:offset]
+                alsoAddStop = addStop.lower()
+                stopList.add(addStop)
+                stopList.add(alsoAddStop)
+                stopPlural = addStop + 's'
+                stopList.add(stopPlural)
+                stopPlural = addStop + '\'s'
+                stopList.add(stopPlural)
+                stopPlural = addStop + 's\''
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + 's'
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + '\'s'
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + 's\''
+                stopList.add(stopPlural)
+                arr = []
+                twList = Study.objects.get(study_id=id).tweets.all()
+
+
+                for y in twList:
+                     tempText = y.text
+                     arr.append(tempText)
+                texts = []
+                d = enchant.Dict("en_US")
+                isNumber = re.compile('^[0-9]+$') 
+                for text in arr:
+                    textwords = []
+                    for word in text.lower().split():
+                        word = re.sub(r'[^\w\s]','',word)
+                        word = re.sub(r'\.+$','',word)
+                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop:
+                            word = ''
+                        if word not in stopList and word!='':
+                            textwords.append(word)
+                        texts.append(textwords)
+
+                frequency = defaultdict(int)
+                for text in texts:
+                    for token in text:
+                        frequency[token] += 1
+                top5 = []
+                numTimes = []
+                for x in range(0,5):
+                    topWord = sorted(frequency, key=frequency.get, reverse=True)[x]
+                    numTimes.append(frequency[topWord])
+                    top5.append(topWord)
+
+                titleG = 'Most associated words with: ' + addStop
+                data = [
+                       plotly.graph_objs.Bar(
+                            x=top5,
+                            y=numTimes,
+                            opacity = 0.5
+                       )
+                ]
+                layout = plotly.graph_objs.Layout(
+                       autosize=True,
+                       title=titleG
+                )
+
+                plotly_fig = plotly.graph_objs.Figure(data=data, layout=layout) 
                 div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
                 context['graph'] = div_fig
                 return context
 
+@login_required
+class SentAnalysis(TemplateView):
+        template_name = 'graphH.html'
+
+        def __init__(self, name):
+               self.name = name
+
+        def get_context_data(self, **kwargs):	
+                context = super().get_context_data(**kwargs)
+             
+                list = Study.objects.all()
+                id = list[6].study_id
+                offset = len(id)- 10
+                keyWord = id[:offset]
+                arr = []
+                twList = Study.objects.get(study_id=id).tweets.all()
+
+                pos = 0
+                neg = 0
+                neutral = 0 
+                for y in twList:
+                     tempText = y.text
+                     arr.append(tempText)
+                for x in arr:
+                     tb = TextBlob(x)
+                     if tb.sentiment[0]<0:
+                         neg += 1 
+                     elif tb.sentiment[0]==0:
+                         neutral += 1
+                     else:              
+                         pos +=1
+
+                analysis = [pos,neg,neutral]                 
+
+                titleG = 'Overall sentiment of: ' + keyWord
+                data = [
+                       plotly.graph_objs.Bar(
+                            x=['positive','negative','neutral'],
+                            y=analysis,
+                            opacity = 0.5
+                       )
+                ]
+                layout = plotly.graph_objs.Layout(
+                       autosize=True,
+                       title=titleG
+                )
+
+                plotly_fig = plotly.graph_objs.Figure(data=data, layout=layout) 
+                div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
+                context['graph'] = div_fig
+                return context
 
 @login_required
 class Histogram(TemplateView):
@@ -77,53 +189,24 @@ class Histogram(TemplateView):
 
 @login_required
 def tweet_type(request):
-    #title = 'Tweet Type'
-    #g = BarGraph(request)
-    #context = g.get_context_data()
-    stopFile = open('/home/momo/django/webapp/analysis/stopwords.txt','r')
-    stopWords = stopFile.read().splitlines()
-    stopList = set(stopWords)
-    isNumber = re.compile('^[0-9]+$')
+    title = 'Tweet Type'
+    g = BarGraph(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
-    list = Study.objects.all()
-    id = list[2].study_id
-    offset = len(id)- 10
-    addStop = id[:offset]
-    stopList.add(addStop)
-    arr = []
-    twList = Study.objects.get(study_id=id).tweets.all()
+@login_required
+def sent_analysis(request):
+    title = 'Sentiment Analysis'
+    g = SentAnalysis(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
-    for y in twList:
-        tempText = y.text
-        arr.append(tempText)
-    texts = []
-    d = enchant.Dict("en_US")
-    val = d.check('rt')
-    isNumber = re.compile('^[0-9]+$') 
-
-    for text in arr:
-        textwords = []
-        for word in text.lower().split():
-            #word = re.sub(r'[^\w\s]','',word)
-            #word = re.sub(r'\.+$','',word)
-            if word == '' or isNumber.search(word) == True or d.check(word) == False:
-               word = ''
-            if word not in stopList and word!='':
-               textwords.append(word)
-        texts.append(textwords)
-
-    frequency = defaultdict(int)
-    for text in texts:
-       for token in text:
-           frequency[token] += 1
-    #inverse = [(value, key) for key, value in frequency.items()]
-    top5 = []
-    for x in range(0,5):
-        topWord = sorted(frequency, key=frequency.get, reverse=True)[x]
-        top5.append(topWord)
-    #tweetText = twList[0].text
-    return HttpResponse(top5[2])
-    #return render(request, 'analysis/graph.html', context)
+@login_required
+def freq_word(request):
+    title = 'Frequent Words'
+    g = BarGraph(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
 
 @login_required
@@ -177,9 +260,9 @@ def analysis(request):
 def create_analysis(request):
 	answer = request.POST['analysis_select']
 	if answer == "tweet_type":
-		return tweet_type(request)
+		return sent_analysis(request)
 	elif answer == "freq_words":
-		return display_freq_words(request)
+		return freq_word(request)
 	elif answer == "freq_hashtags":
 		return display_freq_hashtags(request)
 	elif answer == "act_authors":
@@ -346,5 +429,4 @@ def display_location(request):
         plt.close(canvas)
         response = HttpResponse(buf.getvalue(), content_type='image/png')
         return response
-
 
