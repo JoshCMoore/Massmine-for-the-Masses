@@ -23,7 +23,7 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	13. Install cufflinks: pip install cufflinks
 	14. Install pandas: pip install pandas
 	NEW: 15. Install celery for async support: pip install celery
-	NEW: 16. Install erlang: apt-get install -y erlang
+	NEW: 16. Install erlang: sudo apt-get install -y erlang
 	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
 	NEW: 18. Install django celery backend: pip install django-celery-results 
 	NEW: 19.  pip install django-encrypted-model-fields
@@ -40,7 +40,7 @@ REPOSITORY CODE INSTALLATION
 
 INSTALING MASSMINE
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
+	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
 	27. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
 	
 
