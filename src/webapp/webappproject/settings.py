@@ -36,6 +36,8 @@ CELERY_RESULT_BACKEND = 'django-cache'
 #CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 #CELERY_TASK_SERIALIZER = 'json'
 
+#Django_tables2 settings
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap.html'
 
 
 
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
     'query',
     'django_celery_results',
     'encrypted_model_fields',
+	'django_tables2',
 ]
 
 MIDDLEWARE = [

@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 #import numpy as np
 import io
 
+from analysis.models import Study
 from django.views.generic.base import TemplateView
 import plotly
 from plotly import tools as tls
@@ -64,6 +65,19 @@ class Histogram(TemplateView):
                 div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
                 context['graph'] = div_fig
                 return context
+
+def get_studies(request):
+	context ={'studies_html':""} 
+	user = request.user
+	for x in Study.objects.all():
+		if str(x.user) == str(user):
+			context['studies_html']+=("<li><a href=\"/analysis/view_study/?value="+x.study_id+"\">"+x.study_id[:-10]+"</a></li>")
+	return render(request, 'analysis/get_studies.html', context)
+
+def get_study(request, value):
+	print(str(value))
+	current_study = Study.objects.get(study_id=value).tweets.all()
+	return render(request, 'analysis/get_study.html', locals())
 
 
 @login_required

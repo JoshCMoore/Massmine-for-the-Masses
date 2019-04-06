@@ -23,16 +23,6 @@ def index(request):
 def request_page(request):
 	return render(request, 'query/query.html', {})
 
-def get_studies(request):
-	context ={'studies_html':""} 
-	user = request.user
-	for x in Study.objects.all():
-		print(type(x.user))
-		print(type(user))
-		if str(x.user) == str(user):
-			context['studies_html']+=("<li><a href=\"/analysis/analysis/\">"+x.study_id[:-10]+"</a></li>")
-	return render(request, 'query/get_studies.html', context)
-
 def make_query(request):
 	
 	keyword = request.POST.get('keyword')
