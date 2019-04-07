@@ -113,5 +113,4 @@ def make_query(request):
 		except Exception as e:
 			print(e)
 		
-	return HttpResponse("Success!")
-
+	return render(request, 'query/query_complete.html', {})
