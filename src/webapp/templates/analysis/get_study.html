@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body_block %}
+{% load render_table from django_tables2 %}
+{# <!DOCTYPE html> #}
+{# <html> #}
+{# <body> #}
+<div class="container">
+	{% render_table current_study %}
+</div>
+{# </body> #}
+{# </html> #}
+{% endblock %}
