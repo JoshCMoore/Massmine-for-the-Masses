@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body_block %}
+{# <!DOCTYPE html> #}
+{# <html> #}
+{# <body> #}
+<div class="container">
+  <div class="jumbotron">
+    <h3>Here are your studies</h3>
+		<ul>
+			{{ studies_html|safe}}
+		</ul>
+	</div>
+</div>
+{# </body> #}
+{# </html> #}
+{% endblock %}
