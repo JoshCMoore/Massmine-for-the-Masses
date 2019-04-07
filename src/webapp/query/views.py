@@ -110,5 +110,5 @@ def make_query(request):
 		except Exception as e:
 			print(e)
 		
-	return HttpResponse(output)
+	return HttpResponse("Success!")
 
