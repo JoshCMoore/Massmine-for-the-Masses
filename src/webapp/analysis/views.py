@@ -66,17 +66,17 @@ class Histogram(TemplateView):
                 context['graph'] = div_fig
                 return context
 
-def get_studies(request):
-	context ={'studies_html':""} 
-	user = request.user
-	for x in Study.objects.all():
-		if str(x.user) == str(user):
-			context['studies_html']+=("<li><a href=\"/analysis/view_study/?value="+x.study_id+"\">"+x.study_id[:-10]+"</a></li>")
-	return render(request, 'analysis/get_studies.html', context)
+# def get_studies(request):
+# 	context ={'studies_html':""} 
+# 	user = request.user
+# 	for x in Study.objects.all():
+# 		if str(x.user) == str(user):
+# 			context['studies_html']+=("<li><a href=\"/analysis/view_study/?value="+x.study_id+"\">"+x.study_id[:-10]+"</a></li>")
+# 	return render(request, 'analysis/get_studies.html', context)
 
-def get_study(request, value):
-	print(str(value))
-	current_study = Study.objects.get(study_id=value).tweets.all()
+def get_study(request):
+	studyid = request.POST['study_select']
+	current_study = Study.objects.get(study_id=studyid).tweets.all()
 	return render(request, 'analysis/get_study.html', locals())
 
 
@@ -132,7 +132,12 @@ class Graph(TemplateView):
 
 @login_required
 def analysis(request):
-    return render(request, 'analysis/analysis.html', {})
+	context ={'studies_html':""} 
+	user = request.user
+	for x in Study.objects.all():
+		if str(x.user) == str(user):
+			context['studies_html']+=("<option value=\""+x.study_id+"\">"+x.study_id[:-10]+"</option>")
+	return render(request, 'analysis/analysis.html', context)
 
 @login_required
 def create_analysis(request):
@@ -161,6 +166,8 @@ def create_analysis(request):
 		return graph_times_favorited(request)
 	elif answer == "location":
 		return display_location(request)
+	elif answer == "view_tweets":
+		return get_study(request)
 	else:
 		return HttpResponse("Error")
 
