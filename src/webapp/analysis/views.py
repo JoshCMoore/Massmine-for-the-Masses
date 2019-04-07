@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django_tables2 import RequestConfig
+import django_tables2
 #import matplotlib
 #matplotlib.use('agg')
 #import matplotlib.pyplot as plt; plt.rcdefaults()
@@ -14,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 import io
 
 from analysis.models import Study
+from query.models import Tweet
 from django.views.generic.base import TemplateView
 import plotly
 from plotly import tools as tls
@@ -74,9 +77,16 @@ class Histogram(TemplateView):
 # 			context['studies_html']+=("<li><a href=\"/analysis/view_study/?value="+x.study_id+"\">"+x.study_id[:-10]+"</a></li>")
 # 	return render(request, 'analysis/get_studies.html', context)
 
+class StudyTable(django_tables2.Table):
+	class Meta:
+		model = Tweet
+		template_name = 'django_tables2/bootstrap.html'
+
+
 def get_study(request):
 	studyid = request.POST['study_select']
-	current_study = Study.objects.get(study_id=studyid).tweets.all()
+	current_study = StudyTable(Study.objects.get(study_id=studyid).tweets.all())
+	RequestConfig(request, paginate=False).configure(current_study)
 	return render(request, 'analysis/get_study.html', locals())
 
 
