@@ -42,7 +42,9 @@ class BarGraph(TemplateView):
 
         def get_context_data(self, **kwargs):	
                 context = super().get_context_data(**kwargs)
-                stopFile = open('/home/momo/django/webapp/analysis/stopwords.txt','r')
+                dirname = os.path.dirname(__file__)
+                filename = os.path.join(dirname, 'stopwords.txt')
+                stopFile = open(filename,'r')
                 stopWords = stopFile.read().splitlines()
                 stopList = set(stopWords)
                 isNumber = re.compile('^[0-9]+$')
@@ -80,7 +82,7 @@ class BarGraph(TemplateView):
                     for word in text.lower().split():
                         word = re.sub(r'[^\w\s]','',word)
                         word = re.sub(r'\.+$','',word)
-                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop:
+                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop or word in alsoAddStop:
                             word = ''
                         if word not in stopList and word!='':
                             textwords.append(word)
