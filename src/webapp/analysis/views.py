@@ -1,6 +1,11 @@
 # analysis/views.py
 
 
+import enchant
+import string
+import re
+import os
+import tempfile
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import reverse
@@ -23,10 +28,95 @@ from plotly import tools as tls
 import plotly.offline
 import plotly.graph_objs
 from pytz import timezone
+from collections import defaultdict
+from textblob import TextBlob
 title = ''
+studyId = ''
 
 @login_required
 class BarGraph(TemplateView):
+        template_name = 'graphH.html'
+       
+        def __init__(self, name):
+               self.name = name
+
+        def get_context_data(self, **kwargs):	
+                context = super().get_context_data(**kwargs)
+                stopFile = open('/home/momo/django/webapp/analysis/stopwords.txt','r')
+                stopWords = stopFile.read().splitlines()
+                stopList = set(stopWords)
+                isNumber = re.compile('^[0-9]+$')
+                global studyId
+                list = Study.objects.all()
+                offset = len(studyId)- 10
+                addStop = studyId[:offset]
+                alsoAddStop = addStop.lower()
+                stopList.add(addStop)
+                stopList.add(alsoAddStop)
+                stopPlural = addStop + 's'
+                stopList.add(stopPlural)
+                stopPlural = addStop + '\'s'
+                stopList.add(stopPlural)
+                stopPlural = addStop + 's\''
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + 's'
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + '\'s'
+                stopList.add(stopPlural)
+                stopPlural = addStop.lower() + 's\''
+                stopList.add(stopPlural)
+                arr = []
+                twList = Study.objects.get(study_id= studyId).tweets.all()
+
+
+                for y in twList:
+                     tempText = y.text
+                     arr.append(tempText)
+                texts = []
+                d = enchant.Dict("en_US")
+                isNumber = re.compile('^[0-9]+$') 
+                for text in arr:
+                    textwords = []
+                    for word in text.lower().split():
+                        word = re.sub(r'[^\w\s]','',word)
+                        word = re.sub(r'\.+$','',word)
+                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop:
+                            word = ''
+                        if word not in stopList and word!='':
+                            textwords.append(word)
+                        texts.append(textwords)
+
+                frequency = defaultdict(int)
+                for text in texts:
+                    for token in text:
+                        frequency[token] += 1
+                top5 = []
+                numTimes = []
+                for x in range(0,5):
+                    topWord = sorted(frequency, key=frequency.get, reverse=True)[x]
+                    numTimes.append(frequency[topWord])
+                    top5.append(topWord)
+
+                titleG = 'Most associated words with: ' + addStop
+                data = [
+                       plotly.graph_objs.Bar(
+                            x=top5,
+                            y=numTimes,
+                            opacity = 0.5
+                       )
+                ]
+                layout = plotly.graph_objs.Layout(
+                       autosize=True,
+                       title=titleG
+                )
+
+                plotly_fig = plotly.graph_objs.Figure(data=data, layout=layout) 
+                div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
+                context['graph'] = div_fig
+                return context
+
+@login_required
+class SentAnalysis(TemplateView):
         template_name = 'graphH.html'
 
         def __init__(self, name):
@@ -34,49 +124,73 @@ class BarGraph(TemplateView):
 
         def get_context_data(self, **kwargs):	
                 context = super().get_context_data(**kwargs)
-                objects = ('Random', 'Words', 'Will','Go','Here')
-                y_pos = np.arange(len(objects))
-                performance = [10,8,6,4,2]
-                f = plt.figure(1)
-                plt.bar(y_pos, performance, align='center', alpha=0.5)
-                plt.xticks(y_pos, objects)
-                plt.ylabel('Times used')
-                plt.title('Most common words used')
-                plt.title(title)
-                plotly_fig = tls.mpl_to_plotly(f)
+                global studyId
+                list = Study.objects.all()
+                offset = len(studyId)- 10
+                keyWord = studyId[:offset]
+                arr = []
+                twList = Study.objects.get(study_id = studyId).tweets.all()
+
+                pos = 0
+                neg = 0
+                neutral = 0 
+                for y in twList:
+                     tempText = y.text
+                     arr.append(tempText)
+                for x in arr:
+                     tb = TextBlob(x)
+                     if tb.sentiment[0]<0:
+                         neg += 1 
+                     elif tb.sentiment[0]==0:
+                         neutral += 1
+                     else:              
+                         pos +=1
+
+                analysis = [pos,neg,neutral]                 
+
+                titleG = 'Overall sentiment of: ' + keyWord
+                data = [
+                       plotly.graph_objs.Bar(
+                            x=['positive','negative','neutral'],
+                            y=analysis,
+                            opacity = 0.5
+                       )
+                ]
+                layout = plotly.graph_objs.Layout(
+                       autosize=True,
+                       title=titleG
+                )
+
+                plotly_fig = plotly.graph_objs.Figure(data=data, layout=layout) 
                 div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
                 context['graph'] = div_fig
                 return context
-
 
 @login_required
-class Histogram(TemplateView):
-        template_name = 'graphH.html'
+def sent_analysis(request):
+    global studyId
+    studyId = request.POST['study_select']
+    title = 'Sentiment Analysis'
+    g = SentAnalysis(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
-        def __init__(self, name):
-                self.name = name
+@login_required
+def freq_word(request):
+    global studyId
+    studyId = request.POST['study_select']
+    title = 'Frequent Words'
+    g = BarGraph(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
-        def get_context_data(self, **kwargs):
-                context = super().get_context_data(**kwargs)
-                x = np.random.randn(10000)
-                f = plt.figure(200)
-                plt.hist(x, color='lightblue')
-                plt.xlabel(title)
-                plt.ylabel('No. of tweets')
-                plt.title(title)
-                plotly_fig = tls.mpl_to_plotly(f)
-                div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
-                context['graph'] = div_fig
-                return context
+@login_required
+def graph(request):
+    g = Graph(request)
+    context = g.get_context_data()
+    return render(request, 'analysis/graph.html', context)
 
-# def get_studies(request):
-# 	context ={'studies_html':""} 
-# 	user = request.user
-# 	for x in Study.objects.all():
-# 		if str(x.user) == str(user):
-# 			context['studies_html']+=("<li><a href=\"/analysis/view_study/?value="+x.study_id+"\">"+x.study_id[:-10]+"</a></li>")
-# 	return render(request, 'analysis/get_studies.html', context)
-
+       
 class StudyTable(django_tables2.Table):
 	class Meta:
 		model = Tweet
@@ -88,35 +202,6 @@ def get_study(request):
 	current_study = StudyTable(Study.objects.get(study_id=studyid).tweets.all())
 	RequestConfig(request, paginate=False).configure(current_study)
 	return render(request, 'analysis/get_study.html', locals())
-
-
-@login_required
-def tweet_type(request):
-    title = 'Tweet Type'
-    g = BarGraph(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
-
-@login_required
-def graph_times_retweeted(request):
-    title = 'Times retweeted'
-    g = Histogram(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
-
-@login_required
-def graph_times_favorited(request):
-    title = 'Times favorited'
-    g = Histogram(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
-
-@login_required
-def graph(request):
-    g = Graph(request)
-    context = g.get_context_data()
-    return render(request, 'analysis/graph.html', context)
-
 
 @login_required
 class Graph(TemplateView):
@@ -152,35 +237,18 @@ def analysis(request):
 @login_required
 def create_analysis(request):
 	answer = request.POST['analysis_select']
-	if answer == "tweet_type":
-		return tweet_type(request)
+	if answer == "tweet_sent":
+		return sent_analysis(request)
 	elif answer == "freq_words":
-		return display_freq_words(request)
-	elif answer == "freq_hashtags":
-		return display_freq_hashtags(request)
-	elif answer == "act_authors":
-		return display_act_authors(request)
-	elif answer == "pop_authors":
-		return display_pop_authors(request)
-	elif answer == "men_accounts":
-		return display_ment_accounts(request)
-	elif answer == "lang":
-		return display_lang(request)
-	elif answer == "device":
-		return display_device(request)
+		return freq_word(request)
 	elif answer == "date":
 		return graph(request)
-	elif answer == "times_retweeted":
-		return graph_times_retweeted(request) 
-	elif answer == "times_favorited":
-		return graph_times_favorited(request)
-	elif answer == "location":
-		return display_location(request)
 	elif answer == "view_tweets":
 		return get_study(request)
 	else:
 		return HttpResponse("Error")
 
+"""
 def display_tweet_type(request):
 	objects = ('Post', 'Retweet', 'Response')
 	y_pos = np.arange(len(objects))
@@ -325,4 +393,4 @@ def display_location(request):
         response = HttpResponse(buf.getvalue(), content_type='image/png')
         return response
 
-
+"""
