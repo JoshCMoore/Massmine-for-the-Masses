@@ -6,10 +6,12 @@ from django.http import HttpResponse
 from django.urls import reverse
 from query.forms import QueryForm
 from query.models import Tweet
+from analysis.models import Study
 from accounts.models import Profile
 from subprocess import Popen, PIPE
 import subprocess
 import json
+import time
 
 def index(request):
 	return render(request, 'index.html')
@@ -29,6 +31,9 @@ def make_query(request):
 	output = stdout.readlines()
 
 	hshtg = None
+	keyword = keyword.replace(' ','_')
+	new_study = Study(user=str(request.user),study_id=keyword+str(int(time.time())))
+	new_study.save()
 
 	for i in output:
 		string = i.decode("utf-8")
@@ -97,15 +102,13 @@ def make_query(request):
 				if (key == 'in_reply_to_screen_name'):
 					reply_scrname = value
 
-			tweet = Tweet(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
+			new_study.tweets.create(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
 					retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
 					screen_name=scr_name,in_reply_to_status_id_str=reply_sid,in_reply_to_user_id_str=reply_uid,
 					in_reply_to_screen_name=reply_scrname,hashtags=hshtg,url=u,
 					description=desc,verified=verify,followers_count = fol_count,friends_count=fr_count,
 					listed_count=list_count,favourites_count=fav_count,num_tweets=tw_count,
 					utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
-
-			tweet.save()
 
 		except Exception as e:
 			print(e)
