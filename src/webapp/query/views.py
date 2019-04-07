@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from query.forms import QueryForm
 from query.models import Tweet
+from accounts.models import Profile
 from subprocess import Popen, PIPE
 import subprocess
 import json
@@ -26,6 +27,8 @@ def make_query(request):
 	stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
 
 	output = stdout.readlines()
+
+	hshtg = None
 
 	for i in output:
 		string = i.decode("utf-8")
@@ -54,10 +57,7 @@ def make_query(request):
 					for key,value in data['entities'].items():
 						if (key == 'hashtags'):
 							for n in data['entities']['hashtags']:
-								if (n['text'] != None):
-									hshtg = n['text']
-								else:
-									hshtg = None
+								hshtg  = n['text']
 				if (key == 'user'):
 					for key,value in data['user'].items():
 						if (key == 'id_str'):
@@ -107,9 +107,8 @@ def make_query(request):
 
 			tweet.save()
 
-		except:
-			print("ERROR, Please Try Again")
+		except Exception as e:
+			print(e)
 		
 	return HttpResponse(output)
-
 
