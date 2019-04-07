@@ -19,4 +19,7 @@ expect "Access token secret:"
 send -- "[lindex $argv 3]\r"
 
 expect eof
+catch wait result
+exit [lindex $result 3]
+
 
