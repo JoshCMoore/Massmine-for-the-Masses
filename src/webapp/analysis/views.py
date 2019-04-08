@@ -232,7 +232,6 @@ class Graph(TemplateView):
             tempText = to_datetime(tempText)
             arr.append(tempText)
         
-        print(arr)
         data = {"dates":arr}
         df = pd.DataFrame(data)
         
@@ -245,7 +244,6 @@ class Graph(TemplateView):
         df.sort_values(by = 'dates')       
         for x in df.dates:
             freq.append(frequency[x])
-        print(df.dates)        
 
         x = df.dates
         y = freq
