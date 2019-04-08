@@ -198,14 +198,14 @@ def graph(request):
     context = g.get_context_data()
     return render(request, 'analysis/graph.html', context)
 
-@login_required       
+
 class StudyTable(django_tables2.Table):
 	class Meta:
 		model = Tweet
 		template_name = 'django_tables2/bootstrap.html'
 
 
-@login_required
+
 def get_study(request):
 	studyid = request.POST['study_select']
 	current_study = StudyTable(Study.objects.get(study_id=studyid).tweets.all())
