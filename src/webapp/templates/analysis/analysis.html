@@ -9,23 +9,17 @@
 	<form method="post" action="{% url 'analysis:create_analysis' %}" target="_blank">
 		{% csrf_token %}
 		<label for="studyid">Enter Study ID:</label>
-		<input type="text" name="studyid" placeholder="Ex. 123456789">
+		<select name="study_select">
+			{{studies_html|safe}}
+		</select>
 		
 	<h3>You may sort this study based on the following options.</h3>
 	<label for="analysis_type"> Pick an analysis:</label>
 	<select name="analysis_select">
-		<option value="tweet_type">Sort by tweet type</option>
+		<option value="tweet_sent">Sort by sentiment</option>
 		<option value="freq_words">Sort by the most frequently used words</option>
-		<option value="freq_hashtags">Sort by the most frequently used hashtags</option>
-		<option value="act_authors">Sort by most active authors</option>
-		<option value="pop_authors">Sort by authors with the most followers</option>
-		<option value="men_accounts">Sort by most mentioned accounts</option>
-		<option value="lang">Sort by language</option>
-		<option value="device">Sort by source device</option>
-		<option value="date">Sort by date</option>		
-		<option value="times_retweeted">Sort by number of retweets</option>
-		<option value="times_favorited">Sort by number of favorites</option>
-		<option value="location">Sort by country</option>
+		<option value="date">Sort by date</optio>
+		<option value="view_tweets">View tweets</option>
 
 	</select>	
 

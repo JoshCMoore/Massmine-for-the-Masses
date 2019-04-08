@@ -4,14 +4,13 @@ from django.shortcuts import render
 from django.core.management import call_command
 from django.http import HttpResponse
 from django.urls import reverse
+from query.forms import QueryForm
 from query.models import Tweet
 from analysis.models import Study
-import pandas as pd
-#import numpy as np
-import datetime
+from accounts.models import Profile
 from subprocess import Popen, PIPE
+import subprocess
 import json
-import os
 import time
 
 def index(request):
@@ -20,53 +19,98 @@ def index(request):
 def request_page(request):
 	return render(request, 'query/query.html', {})
 
-def get_studies(request):
-	context ={'studies_html':""} 
-	for x in Study.objects.all():
-		context['studies_html']+=("<li>"+x.study_id[:-10]+"</li>")
-	return render(request, 'query/get_studies.html', context)
-
 def make_query(request):
 	
-	keyword = request.POST.get("keyword")
-	count = request.POST.get("count")
-	
-	str1 = "massmine --task=twitter-search --count="
-	str2 = " --query="
-	str3 = " | jsan --output="
-	str4 = ".csv"
+	keyword = request.POST.get('keyword')
+	count = request.POST.get('count')
 
-	command = str1 + count + str2 + "\""+keyword+"\"" + str3 + keyword + str4
+	command = 'massmine --task=twitter-search --count=' + count + ' --query=' + keyword
 
-	os.system(command)
-	
-	df = pd.read_csv('~/django/webapp/'+keyword+'.csv', error_bad_lines=False)
+	stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
+
+	output = stdout.readlines()
+
+	hshtg = None
+	keyword = keyword.replace(' ','_')
 	new_study = Study(user=str(request.user),study_id=keyword+str(int(time.time())))
 	new_study.save()
 
-	for row in df.iterrows():
-		for x in range(1,len(row)):
-			id_str = row[x]['id_str']
-			tweet_text = row[x]['text']
-			if 'place:country_code' in row[x]:
-				tweet_country = row[x]['place:country_code']
-			else:
-				tweet_country = ''
-			tweet_device = row[x]['source']
-			tweet_retweet_count = row[x]['retweet_count']
-			tweet_lang = row[x]['lang']
-			tweet_user = row[x]['user:screen_name']
-			tweet_followers_count = row[x]['user:followers_count']
-			new_study.tweets.create(tweet_id_str = id_str,text = tweet_text, country = tweet_country, device = tweet_device, retweet_count = tweet_retweet_count, lang = tweet_lang, screen_name = tweet_user, followers_count = tweet_followers_count)
+	for i in output:
+		string = i.decode("utf-8")
+		data = json.loads(string)
 
-	return HttpResponse("Success!")
+		try:
 
-	# massmine --task=twitter-stream --query=love --count=200 | jsan --output=mydata.csv
-# 	#process = subprocess.Popen(['touch test.txt'])
-# 	command = 'massmine --task=twitter-search --count=' + count + ' --query=' + keyword 
-# 	#os.system('massmine --task=twitter-search --count=200 --query=love --output=mydata.json')
-# 	stdout = Popen(command, shell=True, stdout=PIPE).stdout 
-# 	output = stdout.read()
-# 	return HttpResponse(output)
-# 
-#  	# massmine --task=twitter-search --count=200 --query=love --output=mydata.json
+			for key,value in data.items():
+				if (key == 'id_str'):
+					tid = value
+				if (key == 'created_at'):
+					ca = value
+				if (key == 'text'):
+					txt = value
+				if (key == 'source'):
+					src = value
+				if (key == 'truncated'):
+					trunc = value
+				if (key == 'retweet_count'):
+					re_count = value
+				if (key == 'metadata'):
+					for key,value in data['metadata'].items():
+						if (key == 'iso_language_code'):
+							language = value
+				if (key == 'entities'):
+					for key,value in data['entities'].items():
+						if (key == 'hashtags'):
+							for n in data['entities']['hashtags']:
+								hshtg  = n['text']
+				if (key == 'user'):
+					for key,value in data['user'].items():
+						if (key == 'id_str'):
+							uid = value
+						if (key == 'location'):
+							cntry = value
+						if (key == 'name'):
+							nme = value
+						if (key == 'screen_name'):
+							scr_name= value
+						if (key == 'url'):
+							u = value
+						if (key == 'description'):
+							desc = value
+						if (key == 'verified'):
+							verify = value
+						if (key == 'followers_count'):
+							fol_count = value
+						if (key == 'listed_count'):
+							list_count = value
+						if (key == 'favourites_count'):
+							fav_count = value
+						if (key == 'statuses_count'):
+							tw_count = value
+						if (key == 'utc_offset'):
+							utc_off = value
+						if (key == 'friends_count'):
+							fr_count = value
+						if (key == 'time_zone'):
+							tz = value
+						if (key == 'geo_enabled'):
+							geo_en = value
+				if (key == 'in_reply_to_status_id_str'):
+					reply_sid = value
+				if (key == 'in_reply_to_user_id_str'):
+					reply_uid = value
+				if (key == 'in_reply_to_screen_name'):
+					reply_scrname = value
+
+			new_study.tweets.create(tweet_id_str=tid,created_at=ca,text=txt,device=src,truncated=trunc,
+					retweet_count=re_count,lang=language,country=cntry,user_id_str=uid,name=nme,
+					screen_name=scr_name,in_reply_to_status_id_str=reply_sid,in_reply_to_user_id_str=reply_uid,
+					in_reply_to_screen_name=reply_scrname,hashtags=hshtg,url=u,
+					description=desc,verified=verify,followers_count = fol_count,friends_count=fr_count,
+					listed_count=list_count,favourites_count=fav_count,num_tweets=tw_count,
+					utc_offset=utc_off,time_zone=tz,geo_enabled=geo_en)
+
+		except Exception as e:
+			print(e)
+		
+	return render(request, 'query/query_complete.html', {})
