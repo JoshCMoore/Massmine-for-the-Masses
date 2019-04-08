@@ -21,7 +21,7 @@ class Tweet(models.Model):
 	in_reply_to_status_id_str = models.CharField(max_length=100, default='in_reply_to_status_id_str', null=True)
 	in_reply_to_user_id_str = models.CharField(max_length=100, default='in_reply_to_user_id_str', null=True)
 	in_reply_to_screen_name = models.CharField(max_length=100, default='in_reply_to_screen_name', null=True)
-	hashtags = models.CharField(max_length=200, default=[''], null=False)
+	hashtags = models.CharField(max_length=200, default=[''], null=True)
 	
 	#from user object api
 	user_id_str = models.CharField(max_length=100, default='user_id_str') # id_str within 
