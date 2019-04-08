@@ -1,0 +1,5 @@
+#Ignore compiled .pyc files, we don't need them
+*.pyc
+
+#Ignore .swp files, since those shouldn't have been uploaded in the first place
+*.swp
