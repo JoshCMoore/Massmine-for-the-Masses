@@ -86,7 +86,7 @@ class BarGraph(TemplateView):
                     for word in text.lower().split():
                         word = re.sub(r'[^\w\s]','',word)
                         word = re.sub(r'\.+$','',word)
-                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop or word in alsoAddStop:
+                        if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop or word in alsoAddStop or len(word) == 1:
                             word = ''
                         if word not in stopList and word!='':
                             textwords.append(word)
