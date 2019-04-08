@@ -19,6 +19,10 @@ import numpy as np
 from django_tables2 import RequestConfig
 import django_tables2
 import io
+import pandas as pd
+from datetime import datetime, timedelta
+from email.utils import parsedate_tz
+
 
 from analysis.models import Study
 from query.models import Tweet
@@ -188,17 +192,20 @@ def freq_word(request):
 
 @login_required
 def graph(request):
+    global studyId
+    studyId = request.POST['study_select']
     g = Graph(request)
     context = g.get_context_data()
     return render(request, 'analysis/graph.html', context)
 
-       
+@login_required       
 class StudyTable(django_tables2.Table):
 	class Meta:
 		model = Tweet
 		template_name = 'django_tables2/bootstrap.html'
 
 
+@login_required
 def get_study(request):
 	studyid = request.POST['study_select']
 	current_study = StudyTable(Study.objects.get(study_id=studyid).tweets.all())
@@ -214,13 +221,40 @@ class Graph(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        global studyId
+        offset = len(studyId)- 10
+        keyWord = studyId[:offset]
+        arr = []
+        twList = Study.objects.get(study_id = studyId).tweets.all()
 
-        x = [-1,0,1,3,7,9]
-        y = [i**2 -i+2 for i in x]
+        for y in twList:
+            tempText = y.created_at
+            tempText = to_datetime(tempText)
+            arr.append(tempText)
+        
+        print(arr)
+        data = {"dates":arr}
+        df = pd.DataFrame(data)
+        
+        frequency = defaultdict(int)
+        #creating datetime
+        for y in arr:
+            frequency[y] += 1
+        freq = []  
+        df['dates']=pd.to_datetime(df['dates'])
+        df.sort_values(by = 'dates')       
+        for x in df.dates:
+            freq.append(frequency[x])
+        print(df.dates)        
+
+        x = df.dates
+        y = freq
+
         stuff_to_display = plotly.graph_objs.Scatter(x=x, y=y, marker={'color': 'blue', 'symbol': 104, 'size': 10}, mode = "lines", name = "Date")
         
+        Title = "Tweets over time for: " + keyWord
         data = plotly.graph_objs.Data([stuff_to_display])
-        layout = plotly.graph_objs.Layout(title = "Tweets over time", xaxis={'title': 'date'}, yaxis={'title':'number of tweets'})
+        layout = plotly.graph_objs.Layout(title = Title, xaxis={'title': 'date and time'}, yaxis={'title':'number of tweets'})
         figure  = plotly.graph_objs.Figure(data=data, layout=layout)
         div = plotly.offline.plot(figure, auto_open=False, output_type='div')
 
@@ -236,6 +270,12 @@ def analysis(request):
 			context['studies_html']+=("<option value=\""+x.study_id+"\">"+x.study_id[:-10]+"</option>")
 	return render(request, 'analysis/analysis.html', context)
 
+
+def to_datetime(datestring):
+    time_tuple = parsedate_tz(datestring.strip())
+    dt = datetime(*time_tuple[:6])
+    return dt - timedelta(seconds=time_tuple[-1])
+
 @login_required
 def create_analysis(request):
 	answer = request.POST['analysis_select']
@@ -250,149 +290,3 @@ def create_analysis(request):
 	else:
 		return HttpResponse("Error")
 
-"""
-def display_tweet_type(request):
-	objects = ('Post', 'Retweet', 'Response')
-	y_pos = np.arange(len(objects))
-	performance = [10,8,6]
-	canvas = plt.figure(1)
-	plt.bar(y_pos, performance, align='center', alpha=0.5)
-	plt.xticks(y_pos, objects)
-	plt.ylabel('Number of tweets')
-	plt.title('Most common tweet type')
-	FigureCanvas(canvas)
-	buf = io.BytesIO()
-	plt.savefig(buf, format='png')
-	plt.close(canvas)
-	response = HttpResponse(buf.getvalue(), content_type='image/png')
-	return response
-
-def display_freq_words(request):
-        objects = ('Random', 'Words', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Times used')
-        plt.title('Most common words used')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_freq_hashtags(request):
-        objects = ('Random', 'Hashtags', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Times used')
-        plt.title('Most common hashtags used')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_act_authors(request):
-        objects = ('Random', 'Names', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of posts')
-        plt.title('Most active authors in study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_pop_authors(request):
-        objects = ('Random', 'Names', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of followers')
-        plt.title('Most popular authors in study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_ment_accounts(request):
-        objects = ('Random', 'TwitterIds', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of mentions')
-        plt.title('Most mentioned accounts in study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_lang(request):
-        objects = ('Different', 'Languages', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of tweets')
-        plt.title('Most used laguages in a study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_device(request):
-        objects = ('Different', 'Devices', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of tweets')
-        plt.title('Most used devices in a study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-def display_location(request):
-        objects = ('Different', 'Locations', 'Will','Go','Here')
-        y_pos = np.arange(len(objects))
-        performance = [10,8,6,4,2]
-        canvas = plt.figure(1)
-        plt.bar(y_pos, performance, align='center', alpha=0.5)
-        plt.xticks(y_pos, objects)
-        plt.ylabel('Number of tweets')
-        plt.title('Most common tweet locations in a study')
-        FigureCanvas(canvas)
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        plt.close(canvas)
-        response = HttpResponse(buf.getvalue(), content_type='image/png')
-        return response
-
-"""
