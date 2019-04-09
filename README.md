@@ -7,7 +7,7 @@ Note to all users: This project is very much a work in progress. Please take pre
 
 DIY steps: To have full implementation of the forgot password functionality, you need to either set up an SMTP server or use a third party service and change from the current file-based system to an email-based system in webapp/webappproject/settings.py
 
-# Documentation Report (Last updated Mar. 17, 2019)
+# Documentation Report (Last updated Apr. 9, 2019)
 https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
 
 # Slides 
@@ -16,7 +16,7 @@ https://docs.google.com/presentation/d/1uO9E6uzCMvY16zW5k5j3LiHBbEx0g-w2cCiQJSXQ
 # Roles and Subsystems.
 Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at. Managing User Account subsystem.
 
-Josh Moore: Meme Finder - Looking for problems in what we've written. Managing Massmine Integration subsystem.
+Josh Moore: Meme Finder - Looking for problems in what we've written. Managing Massmine Integration and Dockerization ubsystem.
 
 Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice. Managing Query subsystem.
 
