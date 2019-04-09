@@ -26,43 +26,46 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	NEW: 16. Install erlang: sudo apt-get install -y erlang
 	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
 	NEW: 18. Install django celery backend: pip install django-celery-results 
-	NEW: 19.  pip install django-encrypted-model-fields
+	NEW: 19. pip install django-encrypted-model-fields
 	NEW: 20. sudo apt-get install expect
-
+	NEW: 21. pip install django-tables2
+	NEW: 22. pip3 install pyenchant
+	NEW: 23. pip install -U textblob
+	
 REPOSITORY CODE INSTALLATION
-	21. Get back out and clone the repository: cd && git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
-	22. Get into cloned directory: cd Massmine-for-the-Masses
-	23. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
-	24. Get back out to your home directory: cd  
-	25. Copy webappproject folder into your virtual environment:
+	24. Get back out and clone the repository: cd && git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	25. Get into cloned directory: cd Massmine-for-the-Masses
+	26. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
+	27. Get back out to your home directory: cd  
+	28. Copy webappproject folder into your virtual environment:
 	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. 
 	You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
 
 INSTALING MASSMINE
 	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
-	27. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
+	29: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
+	30. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
 	
 
 MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
-	28. Replace problem variable: cd && sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
-	29. (Ignore for development) Remove any old keys: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py
-	30. (Ignore for development)Insert a dummy key to use while generating a new one: echo "FIELD_ENCRYPTION_KEY = '6-QgONW6TUl5rt4Xq8u-wBwPcb15sIYS2CN6d69zueM='" >> django/webapp/webappproject/settings.py
-	31. (Ignore for development)Add variable to activate script so it stays around: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
-	32. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'" >> django/webapp/webappproject/settings.py
+	31. Replace problem variable: cd && sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
+	32. (Ignore for development) Remove any old keys: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py
+	33. (Ignore for development)Insert a dummy key to use while generating a new one: echo "FIELD_ENCRYPTION_KEY = '6-QgONW6TUl5rt4Xq8u-wBwPcb15sIYS2CN6d69zueM='" >> django/webapp/webappproject/settings.py
+	34. (Ignore for development)Add variable to activate script so it stays around: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
+	35. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'" >> django/webapp/webappproject/settings.py
 	# Originally the line in settings should have read: FIELD_ENCRYPTION_KEY = os.environ.get(‘FIELD_ENCRYPTION_KEY’, ‘’), 
 	# However, due to errors in testing, we keep the hardcoded value instead. 
 	# As a result, it is HIGHlY advised you strip this key from your settings before uploading to a public repository.
 
 
 CREATING DATABASE
-	33. python django/webapp/manage.py makemigrations
-	34. python django/webapp/manage.py migrate --run-syncdb
-	35. python django/webapp/manage.py migrate django_celery_results
+	36. python django/webapp/manage.py makemigrations
+	37. python django/webapp/manage.py migrate --run-syncdb
+	38. python django/webapp/manage.py migrate django_celery_results
 	OPTIONAL: if you want an admin, do: python django/webapp/manage.py createsuperuser and walk through the options to create one
 
 STARTING THE SERVER
-	36. Run your server!: python django/webapp/manage.py runserver
+	39. Run your server!: python django/webapp/manage.py runserver
 
 
 
@@ -71,3 +74,21 @@ You're done! If you close this environment, you can get back into it by cd'ing i
 If you want to have forgot password send to actual emails, you will need to either set up a smtp server or use a third party service and change details in the webapp/webappprojct/settings.py file. Currently, emails are 'sent' to a folder within the project.
 
 Note to developers: Functionality may need to be introduced that will start massmine and the rabbitmq-server automatically
+
+
+Troubleshooting migrations:
+
+	If you are getting the error 'no module named X' when attempting to migrate or run the project, try installing the module listed. Keep in mind that names may not be exact - for example, if you have installed 'enchant' but not 'pyenchant', you will get the error 'no module named enchant'. Refer to the instructions above for instructions on installing modules that may have been missed.
+
+	If you are still having errrs when migrating or running your server, try deleting the contents of all migrations and __pycache__ folders, then start from the step to makemigrations again. Don't forget to do 'migrate --run-syncdb'!
+
+	If there are still issues migrating, you can try deleting the migrations and pycache folders, and also delete the database. THIS WILL DELETE ANY DATA YOU HAVE STORED BEYOND THE ABILITY TO RECOVER, SO BE WARNED!
+
+
+Troubleshooting running your server:
+	
+	If you can't see the webpage: This project runs by default at 127.0.01:8000. Check your firewall and make sure that port 8000 and the loopback address are not blocked.
+
+	If you still can't see the webpage: Did you do the 'runserver' command? 
+
+	 
