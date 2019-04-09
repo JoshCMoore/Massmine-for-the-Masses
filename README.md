@@ -16,7 +16,7 @@ https://docs.google.com/presentation/d/1uO9E6uzCMvY16zW5k5j3LiHBbEx0g-w2cCiQJSXQ
 # Roles and Subsystems.
 Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at. Managing User Account subsystem.
 
-Josh Moore: Meme Finder - Looking for problems in what we've written. Managing Massmine Integration and Dockerization ubsystem.
+Josh Moore: Meme Finder - Looking for problems in what we've written. Managing Massmine Integration and Dockerization subsystem.
 
 Logan Hornbuckle: Expert in Fingerpainting - Putting ideas into practice. Managing Query subsystem.
 
