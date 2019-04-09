@@ -47,8 +47,9 @@ INSTALING MASSMINE
 	
 
 MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
-	30. (Ignore for development) Generate a new key and add it to a permenant environment variable:  MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
-	31. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY','')" >> django/webapp/webappproject/settings.py
+	30. (Ignore for development) Generate a new key:  MYVAR=$( python django/webapp/manage.py generate_encryption_key)
+	31. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'"  >> django/webapp/webappproject/settings.py
+
 
 CREATING DATABASE
 	32. python django/webapp/manage.py makemigrations
