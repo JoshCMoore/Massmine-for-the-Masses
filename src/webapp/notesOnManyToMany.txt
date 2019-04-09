@@ -1,0 +1,15 @@
+In order to use the Study table, add this line to the top of a python file: 
+	from analysis.models import Study
+
+When choosing a study object from the database, use the format:
+	Study.objects.get(study_id=$STUDY_ID)
+	where $STUDY_ID is the id you are looking for
+
+To get a specific tweet:
+	Study.objects.get(study_id=$STUDY_ID).tweets.get(tweet_id_str=$ID_STR)
+
+To get all tweets: 
+	Study.objects.get(study_id=$STUDY_ID).tweets.all() 
+
+To get attributes from a tweet:
+	Study.objects.get(study_id=$STUDY_ID).tweets.get(tweet_id_str=$ID_STR).$ATTRIBUTE_NAME

@@ -1,69 +1,73 @@
 #patanzer
 #How to install Massmine-for-the-Masses
 
-1. Install an Ubuntu VM - 18.04 tested
-2. Install git: sudo apt-get install git
-3. Install pip: sudo apt install python3-pip
+GET YOURSELF A VM
+	1. Install an Ubuntu VM - 18.04 tested. There's guides for this everywhere, please don't ask us.
 
-NEW: sudo apt-get install rabbitmq-server
+BASIC TOOLS TO INSTALL THE REST OF IT
+	2. Install git: sudo apt-get install git
+	3. Install pip: sudo apt install python3-pip
 
-4. Install virtualenv: python3 -m pip install virtualenv
-5. Make a working directory: mkdir django
-6. Go into working directoy: cd django
-7. Create virtual enviornment: python3 -m virtualenv environ -p python3
-8. Activate environment: source environ/bin/activate
-9. Install django: pip install django
-10. Install numpy: pip install numpy
-11. Install matplotlib: pip install matplotlib
-12. Install plotly: pip install plotly
-13. Install cufflinks: pip install cufflinks
-14. Install pandas: pip install pandas
+SETTING UP YOUR VIRTUAL ENVIRONMENT
+	4. Install virtualenv: python3 -m pip install virtualenv
+	5. Make a working directory: mkdir django
+	6. Go into working directoy: cd django
+	7. Create virtual enviornment: python3 -m virtualenv environ -p python3
+	8. Activate environment: source environ/bin/activate
 
-NEW: pip install celery
-NEW: pip install django-celery-results 
+WHAT TO INSTALL IN YOUR ENVIRONMENT
+	9.  Install django: pip install django
+	10. Install numpy: pip install numpy
+	11. Install matplotlib: pip install matplotlib
+	12. Install plotly: pip install plotly
+	13. Install cufflinks: pip install cufflinks
+	14. Install pandas: pip install pandas
+	NEW: 15. Install celery for async support: pip install celery
+	NEW: 16. Install erlang: sudo apt-get install -y erlang
+	NEW: 17. Install rabbitmq-server sudo apt-get install rabbitmq-server
+	NEW: 18. Install django celery backend: pip install django-celery-results 
+	NEW: 19.  pip install django-encrypted-model-fields
+	NEW: 20. sudo apt-get install expect
 
-Now for a hacky bit of code...
+REPOSITORY CODE INSTALLATION
+	21. Get back out and clone the repository: cd && git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
+	22. Get into cloned directory: cd Massmine-for-the-Masses
+	23. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
+	24. Get back out to your home directory: cd  
+	25. Copy webappproject folder into your virtual environment:
+	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. 
+	You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
 
-THIS NEXT STEP WILL BREAK ON ANYTHING BUT PYTHON3.6. IF YOU HAVE A DIFFERENT VERSION, EDIT THE LINE BELOW
-15. cd environ/lib/python3.6/site-packages/django/utils
-16. (there will eventually be a script for this, but for now do it by hand) Edit the timezone.py file with the following:
-	 scroll down to the method get_default_timezone and change the return value from 'return pytz.timezone(settings.TIME_ZONE)' to 'return pytz.timezone(settings.TIME)'
+INSTALING MASSMINE
+	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
+	26: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
+	27. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
+	
 
-Continuing with normal installation:
-17. Get back out: cd
-18. Clone the repository: git clone https://github.com/JoshCMoore/Massmine-for-the-Masses.git
-19. Get into cloned directory: cd Massmine-for-the-Masses
-
-Only developers do step 19, everyone else skip to step 20
-20. Checkout the right branch (for example, I do: git checkout patanzer)
-
-21. Get back out to your home directory: cd  
-22. Copy webappproject folder into your virtual environment:
-	You want to get the 'webapp' folder from Massmine/src and put it into the django directory you just created.
-	Use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
+MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
+	28. Replace problem variable: cd && sed -i "s/TIME_ZONE/TIME/g" django/environ/lib/python3.6/site-packages/django/utils/timezone.py
+	29. (Ignore for development) Remove any old keys: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py
+	30. (Ignore for development)Insert a dummy key to use while generating a new one: echo "FIELD_ENCRYPTION_KEY = '6-QgONW6TUl5rt4Xq8u-wBwPcb15sIYS2CN6d69zueM='" >> django/webapp/webappproject/settings.py
+	31. (Ignore for development)Add variable to activate script so it stays around: MYVAR=$( python django/webapp/manage.py generate_encryption_key) && echo "export FIELD_ENCRYPTION_KEY=$MYVAR" >> django/environ/bin/activate
+	32. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'" >> django/webapp/webappproject/settings.py
+	# Originally the line in settings should have read: FIELD_ENCRYPTION_KEY = os.environ.get(‘FIELD_ENCRYPTION_KEY’, ‘’), 
+	# However, due to errors in testing, we keep the hardcoded value instead. 
+	# As a result, it is HIGHlY advised you strip this key from your settings before uploading to a public repository.
 
 
-Installing Massmine: (Note to developers: only needs done the first time, don't have to repeat this step when you overwrite webapp)
-For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
-23: Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64 -d django/
-24. Make massmine executable (may ask for your password): sudo ln -s django/massmine/massmine /usr/local/bin
+CREATING DATABASE
+	33. python django/webapp/manage.py makemigrations
+	34. python django/webapp/manage.py migrate --run-syncdb
+	35. python django/webapp/manage.py migrate django_celery_results
+	OPTIONAL: if you want an admin, do: python django/webapp/manage.py createsuperuser and walk through the options to create one
 
-Installing JSAN: (Again, developers, you only have to do this once)
-JSAN 1.4.0 is included in the webapp folder. The github for it is: https://github.com/n3mo/jsan
-25. Unzip the jsan zip file: unzip django/webapp/jsan-1.4.0-linux-x86_64 -d django/
-26. Make jsan executable: sudo ln -s django/jsan/jsan /usr/local/bin
-27. Get into the appropriate directory: cd django/webapp
+STARTING THE SERVER
+	36. Run your server!: python django/webapp/manage.py runserver
 
-If your database does not exist or needs to be remade, do steps 27 and 28. Otherwise skip to step 29.
-
-28. python manage.py makemigrations
-29. python manage.py migrate --run-syncdb
-
-NEW: python manage.py migrate django_celery_results
-
-Finally -
-30. Run your server!: python manage.py runserver
 
 
 You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: source environ/bin/activate
-   
+
+If you want to have forgot password send to actual emails, you will need to either set up a smtp server or use a third party service and change details in the webapp/webappprojct/settings.py file. Currently, emails are 'sent' to a folder within the project.
+
+Note to developers: Functionality may need to be introduced that will start massmine and the rabbitmq-server automatically

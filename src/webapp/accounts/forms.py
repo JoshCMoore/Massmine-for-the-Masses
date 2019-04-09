@@ -8,15 +8,17 @@ from accounts.models import Profile
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('oauth', 'bio')
+        fields = ('consumer_key', 'consumer_secret', 'access_token', 'access_token_secret')
 
 class UserRegistrationForm(UserCreationForm):
-    oauth = forms.CharField(max_length = 50, help_text='Required. This is your Twitter key used to access the api.')
-    bio = forms.CharField(max_length = 500, required=False)
-
+    consumer_key = forms.CharField(max_length = 50, required = True)
+    consumer_secret = forms.CharField(max_length = 50, required = True)
+    access_token = forms.CharField(max_length = 50, required = True)
+    access_token_secret = forms.CharField(max_length = 50, required = True)
+    
     class Meta:
         model = User
-        fields = ('username', 'email','first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
 
 class EditUserForm(forms.ModelForm):
 
@@ -26,3 +28,5 @@ class EditUserForm(forms.ModelForm):
             'email',
             'first_name',
             'last_name')
+
+

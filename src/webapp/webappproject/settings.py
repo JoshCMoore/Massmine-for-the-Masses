@@ -27,7 +27,7 @@ DEBUG = True
 
 
 #Celery settings
-CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_RESULT_BACKEND = 'django-cache'
 
@@ -36,6 +36,8 @@ CELERY_RESULT_BACKEND = 'django-cache'
 #CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 #CELERY_TASK_SERIALIZER = 'json'
 
+#Django_tables2 settings
+DJANGO_TABLES2_TEMPLATE = 'django_tables2/bootstrap.html'
 
 
 
@@ -55,6 +57,8 @@ INSTALLED_APPS = [
     'analysis',
     'query',
     'django_celery_results',
+    'encrypted_model_fields',
+	'django_tables2',
 ]
 
 MIDDLEWARE = [
@@ -145,4 +149,20 @@ LOGIN_EXEMPT_URLS = (
 	r'^account/logout/$',
 	r'^account/register/$',)
 
+#Password reset Email Backend
+    #To use this on your own systems, uncomment and fill in the following fields:
+#EMAIL_USE_TLS = True
+#DEFAULT_FROM_EMAIL = 'test@gmail.com'
+#SERVER_EMAIL = 'test@gmail.com'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'test@gmail.com'
+#EMAIL_HOST_PASSWORD = 'test123##'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+    #Once you've filled in the above fields, you can comment out or delete the following two lines (which store the forgot-password 'emails' in a text file
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# Encryption Setup (installation will add encryption key below)
+FIELD_ENCRYPTION_KEY = 'BHf17uGpCP4ocVW4vgFSLR4m7pIhlWyicntsZ2W7Pv4='
