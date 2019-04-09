@@ -74,3 +74,21 @@ You're done! If you close this environment, you can get back into it by cd'ing i
 If you want to have forgot password send to actual emails, you will need to either set up a smtp server or use a third party service and change details in the webapp/webappprojct/settings.py file. Currently, emails are 'sent' to a folder within the project.
 
 Note to developers: Functionality may need to be introduced that will start massmine and the rabbitmq-server automatically
+
+
+Troubleshooting migrations:
+
+	If you are getting the error 'no module named X' when attempting to migrate or run the project, try installing the module listed. Keep in mind that names may not be exact - for example, if you have installed 'enchant' but not 'pyenchant', you will get the error 'no module named enchant'. Refer to the instructions above for instructions on installing modules that may have been missed.
+
+	If you are still having errrs when migrating or running your server, try deleting the contents of all migrations and __pycache__ folders, then start from the step to makemigrations again. Don't forget to do 'migrate --run-syncdb'!
+
+	If there are still issues migrating, you can try deleting the migrations and pycache folders, and also delete the database. THIS WILL DELETE ANY DATA YOU HAVE STORED BEYOND THE ABILITY TO RECOVER, SO BE WARNED!
+
+
+Troubleshooting running your server:
+	
+	If you can't see the webpage: This project runs by default at 127.0.01:8000. Check your firewall and make sure that port 8000 and the loopback address are not blocked.
+
+	If you still can't see the webpage: Did you do the 'runserver' command? 
+
+	 
