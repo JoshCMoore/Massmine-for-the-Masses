@@ -3,7 +3,7 @@ A web application that allows a user to create queries for Twitter data in a sim
 
 To build from source, take a look at the webappInstallation.txt file.
  
-Note to all users: This project is very much a work in progress. Please take precautions when installing on live systems. As this repository will not be maintained or updated after May 2019, it is advised that to fork your own branch of the project to edit and update as desired. Additionally, this project is NOT intended to be run on an external or unprotected network, as the default server employed by this project does not employ SSL or TLS for its web pages. 
+Note to all users: This project is intended as a proof of concept only. Please take precautions when installing on live systems. As this repository will not be maintained or updated after May 2019, it is advised that to fork your own branch of the project to edit and update as desired. Additionally, this project is NOT intended to be run on an external or unprotected network, as the default server employed by this project does not employ SSL or TLS for its web pages. 
 
 DIY steps: To have full implementation of the forgot password functionality, you need to either set up an SMTP server or use a third party service and change from the current file-based system to an email-based system in webapp/webappproject/settings.py
 
