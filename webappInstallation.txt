@@ -26,7 +26,7 @@ WHAT TO INSTALL IN YOUR ENVIRONMENT
 	16. Install rabbitmq-server sudo apt-get install -y rabbitmq-server
 	17. Install django celery backend: pip install django-celery-results 
 	18. pip install django-encrypted-model-fields
-	19. sudo apt-get install -y expect
+	19. pip install pexpect
 	20. pip install django-tables2
 	21. pip3 install pyenchant
 	22. pip install -U textblob
