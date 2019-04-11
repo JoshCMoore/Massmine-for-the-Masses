@@ -9,6 +9,7 @@ from query.models import Tweet
 from analysis.models import Study
 from accounts.models import Profile
 from subprocess import Popen, PIPE
+from django.contrib.auth.decorators import login_required
 import pexpect
 import subprocess
 import os
@@ -44,6 +45,7 @@ def validate_massmine(request):
 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
 	return(child.exitstatus)
 
+@login_required
 def make_query(request):
 
 	if (validate_massmine(request) == 1):
@@ -52,7 +54,7 @@ def make_query(request):
 		keyword = request.POST.get('keyword')
 		count = request.POST.get('count')
 
-		command = 'massmine --task=twitter-search --count=' + count + ' --query=' + keyword
+		command = 'massmine --task=twitter-search --count=' + count + ' --query=' + '"'+keyword+'"'
 
 		stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
 
