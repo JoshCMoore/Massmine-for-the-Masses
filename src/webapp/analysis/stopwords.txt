@@ -28,6 +28,7 @@ among
 amongst
 amoungst
 amount
+amp
 an
 and
 another
@@ -223,6 +224,7 @@ put
 rather
 re
 rt
+retweet
 same
 see
 seem
@@ -285,6 +287,7 @@ too
 top
 toward
 towards
+tweet
 twelve
 twenty
 two
