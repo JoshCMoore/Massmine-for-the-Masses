@@ -11,5 +11,4 @@ app_name = 'query'
 urlpatterns=[
     url(r'^request_page/$', views.request_page, name='request_page'),
     url(r'^make_query/$', views.make_query, name='make_query'),
-    url(r'^validate_massmine/$', views.validate_massmine, name='validate_massmine'),
 ]
