@@ -1,0 +1,19 @@
+{% extends "accounts/base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+    <h1>Enter a Query Term</h1>
+		<form method="post" action="{% url 'massminetest:test' %}">
+				  {% csrf_token %}
+				  <label for="Search_Term">Search Term:</label>
+				  <input type="text" name="Search_Term" placeholder="Hack the Planet">
+				  <label for="Number_Of_Tweets">Number of Tweets:</label>
+				  <input type="text" name="Number_Of_Tweets" placeholder="1507">
+
+		<input type="submit" name="" value="Search">
+
+		</form>
+  </div>
+</div>
+
+{% endblock %}

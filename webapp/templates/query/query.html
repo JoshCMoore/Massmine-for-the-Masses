@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body_block %}
+{# <!DOCTYPE html> #}
+{# <html> #}
+{# <body> #}
+<div class="container">
+  <div class="jumbotron">
+    <h3>Enter a Search Term</h3>
+        <form method="POST" action="{% url 'query:make_query' %}">
+            {% csrf_token %}
+            <label for="keyword">Keyword:</label>
+            <input type="text" name="keyword" placeholder="Ex. Computer Science">
+            <label for="count">Count:</label>
+            <input type="text" name="count" placeholder="Ex. 500">
+            <input type="submit" value="Submit Query">
+        </form>
+	</div>
+</div>
+{# </body> #}
+{# </html> #}
+{% endblock %}
