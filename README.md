@@ -7,11 +7,7 @@ Note to all users: This project is intended as a proof of concept only. Please t
 
 DIY steps: To have full implementation of the forgot password functionality, you need to either set up an SMTP server or use a third party service and change from the current file-based system to an email-based system in webapp/webappproject/settings.py
 
-# Documentation Report (Last updated Apr. 9, 2019)
-https://docs.google.com/document/d/1AWmd1aNhKdGEgJwtUmRVg8DjnDtYorHeFS1gr_bBCEg/edit?usp=sharing
-
-# Slides 
-https://docs.google.com/presentation/d/1uO9E6uzCMvY16zW5k5j3LiHBbEx0g-w2cCiQJSXQaLY/edit?usp=sharing
+This specific project will not be maintained after the time of this posting (April 26, 2019). However, there is a fork planned to improve and further develop this project. Stay tuned!
 
 # Roles and Subsystems.
 Patricia Tanzer: Jelly Bean Counter - Keeping track of what we have and where we're at. Managing User Account subsystem.
